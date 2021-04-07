@@ -22,4 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-backend/env
+#Cosas de pycharm y python
+backend/.idea
+backend/__pycache__
+backend/venv
+backend/.env

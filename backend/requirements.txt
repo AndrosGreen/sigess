@@ -8,6 +8,7 @@ cryptography==3.4.7
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-MySQL==1.5.2
+greenlet==1.0.0
 isort==5.8.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
@@ -20,8 +21,10 @@ pycparser==2.20
 pylint==2.7.4
 PyMySQL==1.0.2
 PyPDF2==1.26.0
+python-dotenv==0.17.0
 scipy==1.6.1
 six==1.15.0
+SQLAlchemy==1.4.6
 tabulate==0.8.9
 toml==0.10.2
 Werkzeug==1.0.1
