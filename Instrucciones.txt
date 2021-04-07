@@ -1,0 +1,23 @@
+Python
+1) Instalar venv
+py -m pip install --user virtualenv
+
+2) Activar el entorno
+.\venv\Scripts\activate
+
+3) Instalar dependencias
+python -m pip install -r requirements.txt
+
+4) Correr el programa
+python main.py
+
+5) Desactivar el entorno (Para cerrar)
+.\env\Scripts\deactivate
+
+
+Node
+1) Instalar dependencias
+npm install
+
+2) Correr node
+npm start
