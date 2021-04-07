@@ -27,3 +27,4 @@ backend/.idea
 backend/__pycache__
 backend/venv
 backend/.env
+backend/sigess/__pycache__
