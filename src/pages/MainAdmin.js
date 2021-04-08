@@ -1,9 +1,9 @@
 import React from 'react';
 
-class MainAdministrador extends React.Component {
+class MainAdmin extends React.Component {
     render(){
         return <div>Main Administrador</div>;
     }
 }
 
-export default MainAdministrador;
+export default MainAdmin;
