@@ -9,10 +9,18 @@ def getAllPokemons():
     return rows  # Ya tiene los datos del pokemon
 
 
-def getPokemonById(id):
-    rows = executeQuery("select * from pokemons where nombre = '{0}'".format(id))
+def getPokemonById(id_pokemon):
+    rows = executeQuery("select * from pokemons where nombre = '{0}'".format(id_pokemon))
     row = rows[0]
-    return row #Ya tiene los datos del pokemon
+    return row  # Ya tiene los datos del pokemon
+
+
+def getPokemonParaLogin(id_pokemon):
+    rows = executeQuery("select * from pokemons where nombre = '{0}'".format(id_pokemon))
+    if len(rows) == 0:
+        return None
+    row = rows[0]
+    return Pokemon(row['nombre'], row['imagen'], row['nivel'], row['sexo'])  # Ya tiene los datos del pokemon
 
 
 def getAllRegiones():
@@ -44,6 +52,7 @@ def addPokemon(pokemon):
         executeStatement(sql, data)
     except Exception as error:
         raise error
+
 
 def updatePokemon(pokemon):
     try:

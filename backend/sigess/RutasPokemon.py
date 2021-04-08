@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
 from Controladores import ControladorPokemon
-from Modelos import Pokemon
+from Modelos.Pokemon import Pokemon
 from sigess import app
 
 
@@ -28,10 +28,11 @@ def pokemonesregiones():
     resp.status_code = 200
     return resp
 
-@app.route('/pokemons/<id>')
-def pokemonPorID(id):
+
+@app.route('/pokemons/<idPokemon>')
+def pokemonPorID(idPokemon):
     # Obtiene el pokemon deacuerdo al nombre
-    pokemon = ControladorPokemon.getPokemonById(id)
+    pokemon = ControladorPokemon.getPokemonById(idPokemon)
     # Los asigna como valor de respuesta
     resp = jsonify(pokemon)
     resp.status_code = 200
@@ -55,7 +56,7 @@ def agregaPokemon():
 
         ControladorPokemon.addPokemon(pokemon)
 
-        # Si todo sailó bien, prepara la respuesta buena
+        # Si sailó bien, prepara la respuesta buena
         resp = jsonify(pokemon)
     # Si algo salió mal, en la respuesta se pone el error
     except Exception as error:

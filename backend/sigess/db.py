@@ -1,11 +1,8 @@
 from flaskext.mysql import MySQL
 import pymysql
 import os
-from dotenv import load_dotenv
 
 from sigess import app
-
-load_dotenv()
 
 mysql = MySQL()
 # MySQL configurations
@@ -18,7 +15,19 @@ mysql.init_app(app)
 mysql = MySQL()
 mysql.init_app(app)
 
+
 # Devuelve las filas consultadas
+def executeQueryWithData(sql, data):
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(sql, data)
+        rows = cursor.fetchall()
+        return rows
+    except Exception as e:
+        raise e
+
+
 def executeQuery(sql):
     try:
         conn = mysql.connect()
