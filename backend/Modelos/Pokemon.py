@@ -1,9 +1,14 @@
-class Pokemon(object):
+from flask_login import UserMixin
+
+
+class Pokemon(UserMixin):
+
     def __init__(self, nombre, imagen, nivel, sexo):
         self.nombre = nombre
         self.imagen = imagen
         self.nivel = nivel
         self.sexo = sexo
+        self.id = nombre  # El id para el UserMixin
 
     @property
     def nombre(self):

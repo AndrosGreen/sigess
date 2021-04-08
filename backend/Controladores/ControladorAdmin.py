@@ -1,10 +1,14 @@
-#!/usr/bin/python
-#-*- coding: utf-8 -*-
+from sigess.db import executeStatement
 
-class ControladorAdmin:
-	def __init__(self):
-		pass
 
-	def obtenerDatos(self, ):
-		pass
+def creaAdmin(admin):
+    # TODO comprobar si el admin existe,
+    # devuelve el admin si sale bien, false o error si no
+    sql = "insert into admins values(%s, %s, %s, %s, %s)"
+    sqlData = (admin.idAdmin, admin.nombre, admin.area, admin.correo, admin.clave)
+    executeStatement(sql, sqlData)
 
+
+def eliminaAdmin():
+    # TODO Dani
+    pass

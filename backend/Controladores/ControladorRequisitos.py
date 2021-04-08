@@ -1,22 +1,27 @@
-#!/usr/bin/python
-#-*- coding: utf-8 -*-
 
-class ControladorRequisitos:
-	def __init__(self):
-		pass
+#Recibe un requisito y lo crea
+def crearRequisito():
+    # TODO Pancho
+    pass
 
-	def crearRequisito(self, ):
-		pass
 
-	def eliminarRequisito(self, ):
-		pass
+# Para un id, elimina ese requisito
+def eliminarRequisito():
+    # TODO Pancho
+    pass
 
-	def obtenerRequisito(self, ):
-		pass
+# Recibe un id de requisito y devuelve el requisito serializado
+def obtenerRequisito():
+    # TODO Pancho
+    pass
 
-	def validarRequisitoAlumno(self, ):
-		pass
 
-	def listarRequisitosAlumno(self, ):
-		pass
+# Recibe un alumno y devuelve los requisitos de este
+def listaRequisitosAlumno():
+    # TODO Mike
+    pass
 
+
+def validarRequisitosAlumno():
+    # TODO Mike
+    pass
