@@ -19,6 +19,6 @@ def eliminaRequisito():
 
 @app.route('/requisitos/obtenerUno')
 @login_required
-def creaRequisito():
+def obtenerRequisito():
     # TODO Pancho
     pass

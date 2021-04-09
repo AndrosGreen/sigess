@@ -84,11 +84,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`Admins` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`Admins` (
-  `idAdmin` INT NOT NULL,
+  `idAdmin` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(120) NOT NULL,
   `area` VARCHAR(30) NOT NULL,
   `correo` VARCHAR(60) NOT NULL,
   `clave` CHAR(32) NOT NULL,
+  `esRevisor` ENUM('T', 'F') NOT NULL,
   PRIMARY KEY (`idAdmin`))
 ENGINE = InnoDB;
 
@@ -165,10 +166,11 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
+-- begin attached script 'script'
 insert into Alumnos values
-('S18120183', 'Daniel', 'Cerna', 'Torres', 'cernadaniel32@gmail.com', MD5('KKCK'), '4451091780', 'Sistemas computacionales', 'Training dojo', 'Luis German Gutierrez Torres');
+('S18120183', 'Daniel', 'Cerna', 'Torres', 'cernadaniel32@gmail.com', MD5('KKCK'), '4451091780', 'Sistemas computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
 insert into Admins values
-(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'));
+(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F');
 insert into AlumnosPreRegistro values
 ('S18120160', md5('MAMR'));
+-- end attached script 'script'
