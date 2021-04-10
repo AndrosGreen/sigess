@@ -1,16 +1,37 @@
-from flask import jsonify
-from flask_login import login_required, current_user
+from flask import request, jsonify
+from flask_login import login_required
 
+from Controladores import ControladorAlumnos
+from Modelos.AlumnoPreRegistro import AlumnoPreRegistro
 from sigess import app
+from sigess.utils import admin_required
 
 
-@app.route('/alumnos/creaAlumno')
+@app.route('/alumnos/preRegistraAlumno', methods=['POST'])
 @login_required
-def creaAlumno():
-    # TODO Dani
-    if not current_user.isAdmin:
-        # Código si no es admin
-        return jsonify("No es admin")
-    else:
-        # Código si sí es admin
-        return jsonify("Pásele")
+@admin_required
+def preRegistraAlumno():
+    """Preregistra un alumno"""
+    json = request.json
+    alumno = AlumnoPreRegistro(
+        json['noControl'],
+        json['clave']
+    )
+    if ControladorAlumnos.existeAlumnoAPreRegistrar(alumno):
+        return {
+            'mensaje': 'El alumno ya se registró previamente'
+        }
+    ControladorAlumnos.preRegistraAlumno(alumno)
+    return {
+        'mensaje': 'El alumno se preregistró exitosamente',
+        'AlumnoPreRegistro': alumno.serialize
+    }
+
+
+@app.route('/alumnos/obtenerAlumnosPreRegistrados', methods=['GET'])
+@login_required
+@admin_required
+def obtenerAlumnosPreRegistrados():
+    """Obtiene alumnos preregistrados"""
+    alumnos = ControladorAlumnos.obtenerAlumnosPreRegistrados()
+    return jsonify(alumnos)
