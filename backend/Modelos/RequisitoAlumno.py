@@ -2,7 +2,7 @@ class RequisitoAlumno:
     def __init__(self, Requisito, Alumno, cumple):
         self.Requisito = Requisito
         self.Alumno = Alumno
-	self.cumple = cumple
+        self.cumple = cumple
         
 
     @property
