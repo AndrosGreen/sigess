@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navbar from './pages/components/Navbar';
+import LogIn from './pages/LogIn';
 import MainAdmin from './pages/MainAdmin';
 import ManageUsers from './pages/ManageUsers';
 import NotFoundPage from './pages/NotFoundPage';
@@ -15,6 +16,7 @@ class App extends React.Component {
                         <Switch>
                             <Route path="/" exact component={MainAdmin} />
                             <Route path="/gestionar/usuarios" exact component={ManageUsers} />
+                            <Route path="/login" exact component={LogIn} />
                             <Route path="*" component={NotFoundPage} />
                         </Switch>
                     </div>
