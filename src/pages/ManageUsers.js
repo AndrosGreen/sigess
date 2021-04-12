@@ -216,12 +216,14 @@ class ManageUsers extends React.Component {
                 <button className="btn btn-success" onClick={this.handleOpenAddStudent}> Agregar Alumno </button>
                 <button className="btn btn-success" onClick={this.handleOpenAddAdmin} style={{margin: "10px"}}> Agregar Administrador </button>
                 <div>
-                    <h3 style={{marginBottom: "15px"}}>Alumnos</h3>
+                    <h4 style={{marginBottom: "15px"}}>Alumnos</h4>
                     <ListStudent
                         students = {this.state.students}
                         handleOpenDeleteStudent = {this.handleOpenDeleteStudent}
                         handleOpenEditStudent = {this.handleOpenEditStudent}
                     />
+                    <h4 style={{marginBottom: "15px", marginTop: "15px"}}>Administradores</h4>
+                    
                 </div>
                 
                 <ModalAddStudents
