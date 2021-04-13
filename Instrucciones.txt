@@ -25,3 +25,8 @@ npm install
 
 2) Correr node
 npm start
+
+3) solo en caso de faltar:
+
+npm install react-bootstrap bootstrap
+npm i axios-cookiejar-support

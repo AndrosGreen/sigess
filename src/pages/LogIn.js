@@ -1,5 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import sigess from './api/sigess';
+import withAuthLogIn from './Auth/withAuthLogIn';
 
 class LogIn extends React.Component {
 
@@ -35,8 +37,22 @@ class LogIn extends React.Component {
             this.props.history.push("/");
         }
         else if(response.status === 200){
-            localStorage.setItem("token","1234");
-            this.props.history.push("/gestionar/usuarios");
+
+            let currentUser = response.data.Usuario;
+            sessionStorage.setItem("usuario", JSON.stringify( currentUser ) );
+
+            console.log(currentUser);
+
+            if( currentUser.nivelDePermisos === 3){
+                this.props.history.push("/gestionar/usuarios");
+            }
+            else if ( currentUser.nivelDePermisos === 2){
+                this.props.history.push("/validar/requisitos");
+            }
+            else if ( currentUser.nivelDePermisos === 1 ){
+                this.props.history.push("/main/alumno");
+            }
+
         }
         
     }
@@ -112,4 +128,4 @@ class LogIn extends React.Component {
     }
 }
 
-export default LogIn;
+export default withAuthLogIn( withRouter( LogIn ) );
