@@ -9,7 +9,15 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
-CORS(app)
+CORS(
+    app,
+    origins='*',
+    allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Credentials"],
+    resources={r"*": {"origins": "*"}},
+    supports_credentials=True,
+    withCredentials=True
+)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
