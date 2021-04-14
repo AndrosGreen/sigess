@@ -18,14 +18,14 @@ class ModalDeleteAdmin extends React.Component{
                         <Modal.Title> Eliminar Pokemon </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Estas seguro de que quieres eliminar a {this.props.nameAdmin}?</p>
+                        <p>Estas seguro de que quieres eliminar a {this.props.idAdmin}?</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="danger" onClick={this.handleClose}>Cancelar</Button>
                         
                         <Button 
                             variant="primary" 
-                            onClick= { () => this.props.delete(this.props.nameAdmin) }
+                            onClick= { () => this.props.deleteAdmin(this.props.idAdmin) }
                         >
                             Eliminar
                         </Button>

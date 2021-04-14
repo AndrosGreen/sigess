@@ -42,7 +42,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`Asignaciones` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`Asignaciones` (
-  `idAsignacion` INT NOT NULL,
+  `idAsignacion` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(20) NOT NULL,
   `inicioRecibos` DATE NOT NULL,
   `finRecibos` DATE NOT NULL,
@@ -100,11 +100,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`Requisitos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`Requisitos` (
-  `idREQUISITO` INT NOT NULL,
+  `idRequisito` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(30) NOT NULL,
   `revisadoPor` INT NOT NULL,
   `detalleARevisar` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`idREQUISITO`, `revisadoPor`),
+  PRIMARY KEY (`idRequisito`, `revisadoPor`),
   INDEX `fk_REQUISITOS_ADMINS1_idx` (`revisadoPor` ASC) VISIBLE,
   CONSTRAINT `fk_REQUISITOS_ADMINS1`
     FOREIGN KEY (`revisadoPor`)
@@ -121,10 +121,10 @@ DROP TABLE IF EXISTS `SIGESS`.`AlumnosRequisitos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`AlumnosRequisitos` (
   `noControl` CHAR(9) NOT NULL,
-  `idREQUISITO` INT NOT NULL,
+  `idRequisito` INT NOT NULL,
   `cumple` ENUM('T', 'F') NOT NULL,
-  PRIMARY KEY (`noControl`, `idREQUISITO`),
-  INDEX `fk_ALUMNOS_has_REQUISITOS_REQUISITOS1_idx` (`idREQUISITO` ASC) VISIBLE,
+  PRIMARY KEY (`noControl`, `idRequisito`),
+  INDEX `fk_ALUMNOS_has_REQUISITOS_REQUISITOS1_idx` (`idRequisito` ASC) VISIBLE,
   INDEX `fk_ALUMNOS_has_REQUISITOS_ALUMNOS1_idx` (`noControl` ASC) VISIBLE,
   CONSTRAINT `fk_ALUMNOS_has_REQUISITOS_ALUMNOS1`
     FOREIGN KEY (`noControl`)
@@ -132,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`AlumnosRequisitos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ALUMNOS_has_REQUISITOS_REQUISITOS1`
-    FOREIGN KEY (`idREQUISITO`)
-    REFERENCES `SIGESS`.`Requisitos` (`idREQUISITO`)
+    FOREIGN KEY (`idRequisito`)
+    REFERENCES `SIGESS`.`Requisitos` (`idRequisito`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -145,7 +145,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`ProgramasServicio` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`ProgramasServicio` (
-  `idProgramaServicio` INT NOT NULL,
+  `idProgramaServicio` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idProgramaServicio`))
 ENGINE = InnoDB;
@@ -170,7 +170,18 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 insert into Alumnos values
 ('S18120183', 'Daniel', 'Cerna', 'Torres', 'cernadaniel32@gmail.com', MD5('KKCK'), '4451091780', 'Sistemas computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
 insert into Admins values
-(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F');
+(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F'),
+(2, 'Gema', 'Ingles', 'pidielpez@gmail.com', md5('InEnglishPlease'), 'T'),
+(3, 'Gema', 'Ingles', 'pidielpez@gmail.com', md5('InEnglishPlease'), 'T'),;
 insert into AlumnosPreRegistro values
 ('S18120160', md5('MAMR'));
+insert into requisitos values
+(null, 'Ingles', 2, 'Valida que tenga los 5 primeros niveles de ingles'),
+(null, 'Extracurricular', 3, 'Valida que tenga extracurriculares cumplodps niveles de ingles'),;
+INSERT INTO alumnos VALUES ('S18120124', 'Miguel', 'Moreno', 'Ruiz', 'mikemamr@gmail.com', 'kkck', '4451233445', 'Sistemas Computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
+insert into alumnosrequisitos values
+('S18120183', 2, 'F'), 
+('S18120183', 3, 'T'), 
+('S18120124', 2, 'T'), 
+('S18120124', 3, 'F');
 -- end attached script 'script'
