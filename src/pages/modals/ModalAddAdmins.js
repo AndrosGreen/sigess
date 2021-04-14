@@ -8,7 +8,7 @@ class ModalAddAmins extends React.Component{
         nameAdmin : '',
         area : '',
         gmail : '',
-        password : ''
+        password : '',
     }
 
     // cierra el modal
@@ -17,7 +17,7 @@ class ModalAddAmins extends React.Component{
                 nameAdmin : '',
                 area : '',
                 gmail : '',
-                password : ''
+                password : '',
             } 
         );
         this.props.handleClose();
@@ -29,13 +29,13 @@ class ModalAddAmins extends React.Component{
             this.state.nameAdmin,
             this.state.area,
             this.state.gmail,
-            this.state.password
+            this.state.password,
         );
         this.setState( {
             nameAdmin : '',
             area : '',
             gmail : '',
-            password : ''
+            password : '',
         } );
         this.props.handleClose();
     }

@@ -15,16 +15,7 @@ class ManageUsers extends React.Component {
 
     state = { 
         // students
-        students : [
-            {
-                noControl : "s18120207", 
-                passwordStudent : "prueba"
-            },
-            {
-                noControl : "s18120184",
-                passwordStudent : "tengonovia"
-            }
-        ],
+        students : [],
         noControl : '',
         passwordStudent : '',
         showAddStudent : false,
@@ -32,24 +23,13 @@ class ManageUsers extends React.Component {
         showDeleteStudent : false,
 
         // admin
-        admins : [
-            {
-                nameAdmin : "Alexia Martinez",
-                area : "idiomas",
-                gmail : "alexia77755@gmail.com",
-                passwordAdmin : "palomitas"
-            },
-            {
-                nameAdmin : "Rene Aguilera",
-                area : "idiomas",
-                gmail : "adrene@gmail.com",
-                passwordAdmin : "father"
-            }
-        ],
+        admins : [],
         nameAdmin : '',
         area : '',
-        gmail : '',
+        gmail : 'hola mundo',
         passwordAdmin : '',
+        esRevisor : '',
+        idAdmin : 0,
         showAddAdmin : false,
         showEditAdmin : false,
         showDeleteAdmin : false
@@ -57,8 +37,8 @@ class ManageUsers extends React.Component {
 
     // cargar usuarios y administradores contenidos en la bd
     componentDidMount (){
-        //this.loadStudents();
-        //this.loadAdmins();
+        this.loadStudents();
+        this.loadAdmins();
     }
 
     /*******************************************************
@@ -67,7 +47,7 @@ class ManageUsers extends React.Component {
     handleCloseAddStudent = () => this.setState({showAddStudent : false});
     handleOpenAddStudent = () => { this.setState( { showAddStudent : true } ); };
 
-    handleCloseEditStudent = () => this.setState({showEditStudent : false});
+    /*handleCloseEditStudent = () => this.setState({showEditStudent : false});
     handleOpenEditStudent = (noControl, passwordStudent) => { 
         this.setState({
             showEditStudent : true,
@@ -82,27 +62,27 @@ class ManageUsers extends React.Component {
             showDeleteStudent : true,
             noControl : noControl
         }); 
-    }
+    }*/
 
     handleCloseAddAdmin = () => this.setState({showAddAdmin : false});
     handleOpenAddAdmin = () => { this.setState( { showAddAdmin : true } ); };
 
     handleCloseEditAdmin = () => this.setState({showEditAdmin : false});
-    handleOpenEditAdmin = (nameAdmin, area, gmail, passwordAdmin) => { 
+    handleOpenEditAdmin = (nameAdmin, area, gmail, idAdmin) => { 
         this.setState({
             showEditAdmin : true,
             nameAdmin : nameAdmin,
             area : area,
             gmail : gmail,
-            passwordAdmin
+            idAdmin : idAdmin
         }); 
     }
 
     handleCloseDeleteAdmin = () => this.setState({showDeleteAdmin : false});
-    handleOpenDeleteAdmin = ( nameAdmin ) => { 
+    handleOpenDeleteAdmin = ( idAdmin ) => { 
         this.setState({
             showDeleteAdmin : true,
-            nameAdmin : nameAdmin
+            idAdmin : idAdmin
         }); 
     }
 
@@ -112,34 +92,36 @@ class ManageUsers extends React.Component {
 
     // agrega un estudiente con el numero de control y una contrasenia
     addStudent = async (noControl, passwordStudent) => {
-        const respuesta = await sigess.post('/student/add',
+        const respuesta = await sigess.post('/alumnos/preRegistraAlumno',
             {
                 noControl : noControl,
-                passwordStudent : passwordStudent
+                clave : passwordStudent
             }
         );
         this.handleCloseAddStudent();
-        //this.loadStudents();
+        this.loadStudents();
 
     }
 
     // agrega un administrador con el nombre, area de trabajo, correo y contrasenia
     addAdmin = async (nameAdmin, area, gmail, passwordAdmin) => {
-        const respuesta = await sigess.post('/admin/add',
+        const respuesta = await sigess.post('/admins/creaAdmin',
             {
-                nameAdmin : nameAdmin,
+                nombre : nameAdmin,
                 area : area,
-                gmail : gmail,
-                passwordAdmin : passwordAdmin
+                correo : gmail,
+                clave : passwordAdmin,
+                esRevisor : 'T'
             }
         );
+        console.log(respuesta.data);
         this.handleCloseAddAdmin();
-        //this.loadAdmins();
+        this.loadAdmins();
 
     }
 
     // edita el numero de control o la contrasenia de un estudiante
-    editStudent = async (noControl, passwordStudent) => {
+    /*editStudent = async (noControl, passwordStudent) => {
 
         const respuesta = await sigess.put('/students/update',
             {
@@ -149,25 +131,33 @@ class ManageUsers extends React.Component {
         );
         this.handleCloseEditStudent();
         //this.loadStudents();
-    }
+    }*/
 
     // edita el nombre, area de trabajo, correo o contrasenia de un administrador
-    editAdmin = async (nameAdmin, area, gmail, passwordAdmin) => {
-
-        const respuesta = await sigess.put('/admins/update',
+    editAdmin = async (area, passwordAdmin, gmail, nameAdmin) => {
+        console.log(gmail);
+        console.log(nameAdmin);
+        console.log(area);
+        console.log(passwordAdmin);
+        console.log(this.state.idAdmin);
+        const respuesta = await sigess.post('/admins/actualizarAdmin',
             {
-                nameAdmin : nameAdmin,
+                
                 area : area,
-                gmail : gmail,
-                passwordAdmin : passwordAdmin
+                clave : passwordAdmin,
+                correo : gmail,
+                esRevisor : 'T',
+                idAdmin : this.state.idAdmin,
+                nombre : nameAdmin
+                
             }
         );
         this.handleCloseEditAdmin();
-        //this.loadAdmins();
+        this.loadAdmins();
     }
 
     // eliminar un estudiante con el numero de control
-    deleteStudent = async (noControl) =>{
+    /*deleteStudent = async (noControl) =>{
         const respuesta = await sigess.delete('/students/delete',{
                 data : {
                     noControl : noControl
@@ -175,36 +165,35 @@ class ManageUsers extends React.Component {
             }
         );
         this.handleCloseDeleteStudent();
-        //this.loadStudents();
-    }
+        this.loadStudents();
+    }*/
 
     // elimina un administrador con su nombre
-    deleteAdmin = async (nameAdmin) =>{
-        const respuesta = await sigess.delete('/admins/delete',{
-                data : {
-                    nameAdmin : nameAdmin
-                }
+    deleteAdmin = async (idAdmin) =>{
+        const respuesta = await sigess.post('/admins/eliminaAdmin',{
+                idAdmin : idAdmin
             }
         );
         this.handleCloseDeleteAdmin();
-        //this.loadAmins();
+        this.loadAdmins();
     }
 
     // carga los estudiantes que se encuentran en la bd
     loadStudents = async () => {
-        const respuesta = await sigess.get( '/students',{
+        const respuesta = await sigess.get( '/alumnos/obtenerAlumnosPreRegistrados',{
                 params : ""
             }
         );
+        console.log(respuesta.data);
         this.setState( { students : respuesta.data } );
     }
-
+    
     // carga los administradores que se encuentran en la bd
     loadAdmins = async () => {
-        const respuesta = await sigess.get( '/admins',{
-                params : ""
+        const respuesta = await sigess.get( '/admins/obtenerAdmins',{
             }
         );
+        
         this.setState( { admins : respuesta.data } );
     }
 
@@ -223,6 +212,11 @@ class ManageUsers extends React.Component {
                         handleOpenEditStudent = {this.handleOpenEditStudent}
                     />
                     <h4 style={{marginBottom: "15px", marginTop: "15px"}}>Administradores</h4>
+                    <ListAdmin
+                        admins = {this.state.admins}
+                        handleOpenDeleteAdmin = {this.handleOpenDeleteAdmin}
+                        handleOpenEditAdmin = {this.handleOpenEditAdmin}
+                    />
                     
                 </div>
                 
@@ -249,6 +243,7 @@ class ManageUsers extends React.Component {
                     area = {this.state.area}
                     gmail = {this.state.gmail}
                     password = {this.state.passwordAdmin}
+                    idAdmin = {this.state.idAdmin}
                 />
 
                 <ModalEditStudent
@@ -262,9 +257,9 @@ class ManageUsers extends React.Component {
 
                 <ModalDeleteAdmin
                     show = {this.state.showDeleteAdmin}
-                    handleOpen = {this.handleOpenDeleteAdmin}
+                    handleOpenDeleteAdmin = {this.handleOpenDeleteAdmin}
                     handleClose = {this.handleCloseDeleteAdmin}
-                    nameAdmin = {this.state.nameAdmin}
+                    idAdmin = {this.state.idAdmin}
                     deleteAdmin = {this.deleteAdmin}
                     
                 />
