@@ -3,17 +3,20 @@ Python
 1) Instalar venv
 py -m pip install --user virtualenv
 
-2) Activar el entorno
+2) Crear venv
+python -m venv venv
+
+3) Activar el entorno
 .\venv\Scripts\activate
 
-3) Instalar dependencias
+4) Instalar dependencias
 python -m pip install -r requirements.txt
 
-4) Correr el programa
+5) Correr el programa
 python main.py
 
-5) Desactivar el entorno (Para cerrar)
-.\env\Scripts\deactivate
+6) Desactivar el entorno (Para cerrar)
+.\venv\Scripts\deactivate
 
 
 Node
@@ -22,3 +25,8 @@ npm install
 
 2) Correr node
 npm start
+
+3) solo en caso de faltar:
+
+npm install react-bootstrap bootstrap
+npm i axios-cookiejar-support

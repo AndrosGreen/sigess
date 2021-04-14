@@ -10,6 +10,7 @@ import AdminCard from './components/AdminCard';
 import ListAdmin from './components/ListAdmin';
 import StudentCard from './components/StudentCard';
 import ListStudent from './components/ListStudent';
+import withAuthSuperAdmin from './Auth/withAuthSuperAdmin';
 
 class ManageUsers extends React.Component {
 
@@ -37,7 +38,7 @@ class ManageUsers extends React.Component {
 
     // cargar usuarios y administradores contenidos en la bd
     componentDidMount (){
-        this.loadStudents();
+        //this.loadStudents();
         this.loadAdmins();
     }
 
@@ -191,9 +192,10 @@ class ManageUsers extends React.Component {
     // carga los administradores que se encuentran en la bd
     loadAdmins = async () => {
         const respuesta = await sigess.get( '/admins/obtenerAdmins',{
+                params : ""
             }
         );
-        
+        console.log(respuesta.data);
         this.setState( { admins : respuesta.data } );
     }
 
@@ -277,4 +279,4 @@ class ManageUsers extends React.Component {
     }
 }
 
-export default ManageUsers;
+export default withAuthSuperAdmin( ManageUsers );

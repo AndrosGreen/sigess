@@ -1,16 +1,24 @@
 class Requisito:
-    def __init__(self, idREQUISITO, nombre, revisadoPor, detalleARevisar):        
-        self.idREQUISITO = idREQUISITO
-        self.nombre = nombre 
-	self.revisadoPor = revisadoPor 
-	self.detalleARevisar = detalleARevisar      
-        
+    def __init__(self, idRequisito, nombre, revisadoPor, detalleARevisar):
+        self.idRequisito = idRequisito
+        self.nombre = nombre
+        self.revisadoPor = revisadoPor
+        self.detalleARevisar = detalleARevisar
+
+    @classmethod
+    def desdeFila(cls, fila):
+        return cls(
+            fila['idRequisito'],
+            fila['nombre'],
+            fila['revisadoPor'],
+            fila['detalleARevisar']
+        )
 
     @property
     def serialize(self):
         return {
-            'idREQUISITO': self.idREQUISITO,
+            'idRequisito': self.idRequisito,
             'nombre': self.nombre,
             'revisadoPor': self.revisadoPor,
-	    'detalleARevisar': self.detalleARevisar,            
+            'detalleARevisar': self.detalleARevisar,
         }
