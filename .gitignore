@@ -24,7 +24,7 @@ yarn-error.log*
 
 #Cosas de pycharm y python
 backend/.idea
-backend/__pycache__
 backend/venv
 backend/.env
-**/__pycache__
+__pycache__/
+ *.pyc

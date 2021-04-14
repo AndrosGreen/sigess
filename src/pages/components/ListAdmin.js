@@ -8,12 +8,13 @@ class ListAdmin extends React.Component{
             admin => {
                 return (
                     <AdminCard
-                        nameAdmin = {admin.nameAdmin}
+                        nombre = {admin.nombre}
                         area = {admin.area}
-                        gmail = {admin.gmail}
-                        password = {admin.password}
-                        handleOpenEdit = {this.props.handleOpenEdit}
-                        handleOpenDelete = {this.props.handleOpenDelete}
+                        correo = {admin.correo}
+                        idAdmin = {admin.idAdmin}
+                        handleOpenEdit = {this.props.handleOpenEditAdmin}
+                        handleOpenDeleteAdmin = {this.props.handleOpenDeleteAdmin}
+                        
                     />
                 );
             }

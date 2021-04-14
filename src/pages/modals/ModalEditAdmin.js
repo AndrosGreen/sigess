@@ -15,9 +15,7 @@ class ModalEditAdmin extends React.Component{
             this.setState( {
                 nameAdmin : this.props.nameAdmin,
                 area : this.props.area,
-                gmail : this.props.gmail,
-                password : this.props.password
-
+                gmail : this.props.gmail
             } );
         }
     }
@@ -61,6 +59,7 @@ class ModalEditAdmin extends React.Component{
                                 <label>Password : </label>
                                 <input 
                                     className="form-control"
+                                    type = "password"
                                     value = {this.state.password}
                                     onChange = { e => this.setState({password : e.target.value}) }
                                 />
@@ -75,10 +74,10 @@ class ModalEditAdmin extends React.Component{
                             variant="primary" 
                             onClick={() => {
                                 this.props.edit(
-                                    this.state.nameAdmin,
                                     this.state.area,
+                                    this.state.password,
                                     this.state.gmail,
-                                    this.state.password
+                                    this.state.nameAdmin
                                 )
                             }}
                         >
