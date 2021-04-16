@@ -38,7 +38,7 @@ class ManageUsers extends React.Component {
 
     // cargar usuarios y administradores contenidos en la bd
     componentDidMount (){
-        //this.loadStudents();
+        this.loadStudents();
         this.loadAdmins();
     }
 
