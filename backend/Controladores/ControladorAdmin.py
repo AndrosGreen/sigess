@@ -65,6 +65,10 @@ def obtenAdmins(nombreAdmin):
 
 def modificaAdmin(admin):
     """Modifica un admin"""
-    sql = 'update admins set nombre=%s, area=%s, correo=%s, clave=%s, esRevisor=%s where idAdmin=%s'
-    data = (admin.nombre, admin.area, admin.correo, admin.clave, admin.esRevisor, admin.idAdmin)
+    if len(admin.clave) > 0:
+        sql = 'update admins set nombre=%s, area=%s, correo=%s, clave=%s, esRevisor=%s where idAdmin=%s'
+        data = (admin.nombre, admin.area, admin.correo, admin.clave, admin.esRevisor, admin.idAdmin)
+    elif len(admin.clave) == 0:
+        sql = 'update admins set nombre=%s, area=%s, correo=%s, esRevisor=%s where idAdmin=%s'
+        data = (admin.nombre, admin.area, admin.correo, admin.esRevisor, admin.idAdmin)
     executeStatement(sql, data)

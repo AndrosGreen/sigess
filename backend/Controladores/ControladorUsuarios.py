@@ -8,21 +8,26 @@ def login(usuario):
 	"""Logea al usuario"""
 	if usuario.nivelDePermisos > 1:
 		sql = "select * from admins where idAdmin=%s and clave=md5(%s)"
-	else:
+	else:  # ¿Es alumno?
 		sql = "select * from alumnos where noControl=%s and clave=md5(%s)"
 	data = (usuario.usuario, usuario.clave)
 	rows = executeQueryWithData(sql, data)
-	if len(rows) == 0:
-		return False
-	else:
-		if usuario.nivelDePermisos > 1:
-			row = rows[0]
-			if row['esRevisor'] == 'F':
-				usuario.nivelDePermisos = 3
-			elif row['esRevisor'] == 'T':
-				usuario.nivelDePermisos = 2
-		login_user(usuario, remember=True)
-		return True
+	if len(rows) == 0 and usuario.nivelDePermisos == 1:  # ¿Es pre registro?
+		sql = "select * from AlumnosPreRegistro where noControl=%s and clave=md5(%s)"
+		data = (usuario.usuario, usuario.clave)
+		rows = executeQueryWithData(sql, data)
+		if len(rows) == 0:  # No es ninguno
+			return False
+		else:
+			usuario.nivelDePermisos = 0  # Es usuario de pre registro
+	if usuario.nivelDePermisos > 1:  # ¿Es revisor, o super admin?
+		row = rows[0]
+		if row['esRevisor'] == 'F':
+			usuario.nivelDePermisos = 3
+		elif row['esRevisor'] == 'T':
+			usuario.nivelDePermisos = 2
+	login_user(usuario, remember=True)
+	return True
 
 
 def logout():
