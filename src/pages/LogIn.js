@@ -27,11 +27,23 @@ class LogIn extends React.Component {
     // trata de loguear al usuario.
     logUser = async (e) => {
         e.preventDefault();
-        const response = await sigess.post( "/usuarios/login",{
-            usuario: this.state.user,
-            clave: this.state.password,
-            esAdmin: this.state.superAdmin
-        });
+
+        let response = null;
+
+        if(this.state.student === true){
+            response = await sigess.post( "/usuarios/login",{
+                usuario: this.state.user,
+                clave: this.state.password,
+                esAdmin: false
+            });
+        }
+        else {
+            response = await sigess.post( "/usuarios/login",{
+                usuario: this.state.user,
+                clave: this.state.password,
+                esAdmin: true
+            });
+        }
         console.log(response);
         if(response?.data === "El usuario no existe"){
             this.props.history.push("/");
@@ -49,7 +61,7 @@ class LogIn extends React.Component {
             else if ( currentUser.nivelDePermisos === 2){
                 this.props.history.push("/validar/requisitos");
             }
-            else if ( currentUser.nivelDePermisos === 1 ){
+            else if ( currentUser.nivelDePermisos === 1 || currentUser.nivelDePermisos === 0){
                 this.props.history.push("/main/alumno");
             }
 

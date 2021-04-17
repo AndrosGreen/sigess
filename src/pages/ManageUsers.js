@@ -80,10 +80,11 @@ class ManageUsers extends React.Component {
     }
 
     handleCloseDeleteAdmin = () => this.setState({showDeleteAdmin : false});
-    handleOpenDeleteAdmin = ( idAdmin ) => { 
+    handleOpenDeleteAdmin = ( idAdmin, name ) => { 
         this.setState({
             showDeleteAdmin : true,
-            idAdmin : idAdmin
+            idAdmin : idAdmin,
+            nameAdmin: name
         }); 
     }
 
@@ -262,6 +263,7 @@ class ManageUsers extends React.Component {
                     handleOpenDeleteAdmin = {this.handleOpenDeleteAdmin}
                     handleClose = {this.handleCloseDeleteAdmin}
                     idAdmin = {this.state.idAdmin}
+                    name = {this.state.nameAdmin}
                     deleteAdmin = {this.deleteAdmin}
                     
                 />
