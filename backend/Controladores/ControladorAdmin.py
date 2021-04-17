@@ -39,7 +39,7 @@ def existeAdmin(admin):
 
 def creaAdmin(admin):
     """Crea un admin y lo devuelve si sale bien o None si no"""
-    sql = "insert into admins values(%s, %s, %s, %s, %s, %s)"
+    sql = "insert into admins values(%s, %s, %s, %s, md5(%s), %s)"
     data = (admin.idAdmin, admin.nombre, admin.area, admin.correo, admin.clave, admin.esRevisor)
     executeStatement(sql, data)
     return obtenAdminPorNombre(admin.nombre)
