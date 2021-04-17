@@ -39,7 +39,7 @@ def existeAdmin(admin):
 
 def creaAdmin(admin):
     """Crea un admin y lo devuelve si sale bien o None si no"""
-    sql = "insert into admins values(%s, %s, %s, %s, %s, %s)"
+    sql = "insert into admins values(%s, %s, %s, %s, md5(%s), %s)"
     data = (admin.idAdmin, admin.nombre, admin.area, admin.correo, admin.clave, admin.esRevisor)
     executeStatement(sql, data)
     return obtenAdminPorNombre(admin.nombre)
@@ -66,7 +66,7 @@ def obtenAdmins(nombreAdmin):
 def modificaAdmin(admin):
     """Modifica un admin"""
     if len(admin.clave) > 0:
-        sql = 'update admins set nombre=%s, area=%s, correo=%s, clave=%s, esRevisor=%s where idAdmin=%s'
+        sql = 'update admins set nombre=%s, area=%s, correo=%s, clave=md5(%s), esRevisor=%s where idAdmin=%s'
         data = (admin.nombre, admin.area, admin.correo, admin.clave, admin.esRevisor, admin.idAdmin)
     elif len(admin.clave) == 0:
         sql = 'update admins set nombre=%s, area=%s, correo=%s, esRevisor=%s where idAdmin=%s'
