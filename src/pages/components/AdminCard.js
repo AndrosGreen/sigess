@@ -26,7 +26,7 @@ class AdminCard extends React.Component{
 
                     <button 
                         className="btn btn-secondary" style={{margin : "10px"}}
-                        onClick={ () => { this.props.handleOpenDeleteAdmin( this.props.idAdmin ); } } 
+                        onClick={ () => { this.props.handleOpenDeleteAdmin( this.props.idAdmin, this.props.nombre ); } } 
                     > 
                         Eliminar
                     </button>
