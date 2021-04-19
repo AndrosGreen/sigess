@@ -15,7 +15,7 @@ def obtenAlumnoPorNombre(nombreAlumno):
 
 def creaAlumno(alumno):
     """Crea un alumno y lo devuelve si sale bien o None si no"""
-    sql = "insert into alumnos values(%s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "insert into alumnos values(%s, %s, %s, %s, %s, md5(%s), %s, %s)"
     data = (alumno.noControl, alumno.nombre, alumno.apPaterno, alumno.apMaterno, alumno.correo, alumno.clave, alumno.carrera,alumno.programa, alumno.encargado, alumno.empresa)
     executeStatement(sql, data)
     return obtenAlumnoPorNombre(alumno.nombre)
@@ -30,7 +30,7 @@ def eliminaAlumno(noControl):
 
 def modificaAlumno(alumno):
     """Modifica un alumno"""
-    sql = 'update alumnos set nombre=%s, apPaterno=%s, apMaterno=%s, correo=%s, clave=%s, carrera=%s, programa=%s, encargado=%s, empresa=%s where noControl=%s'
+    sql = 'update alumnos set nombre=%s, apPaterno=%s, apMaterno=%s, correo=%s, clave=md5(%s), carrera=%s, programa=%s, encargado=%s, empresa=%s where noControl=%s'
     data = (alumno.nombre, alumno.apPaterno, alumno.apMaterno, alumno.correo, alumno.clave, alumno.carrera, alumno.programa, alumno.encargado, alumno.empresa,alumno.noControl)
     executeStatement(sql, data)
 
