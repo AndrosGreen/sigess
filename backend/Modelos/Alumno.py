@@ -11,6 +11,20 @@ class Alumno:
         self.encargado = encargado
         self.empresa = empresa
 
+    @classmethod
+    def desdeFila(cls, fila):
+        return cls(
+            fila['noControl'],
+            fila['nombre'],
+            fila['apPaterno'],
+            fila['apMaterno'],
+            fila['correo'],
+            fila['clave'],
+            fila['carrera'],
+            fila['programa'],
+            fila['encargado'],
+            fila['empresa']
+        )
     @property
     def serialize(self):
         return {
