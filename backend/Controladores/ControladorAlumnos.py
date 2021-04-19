@@ -45,7 +45,7 @@ def registraAlumno(alumno):
 
 def listaAlumnos():
     rows = executeQuery("select * from alumnos")
-    return rows  # Ya tiene los datos del pokemon
+    return rows  
 
 def existeAlumnoAPreRegistrar(alumno):
     """Consulta si existe el alumno a preregistrar en el pre registro o en los registros"""
