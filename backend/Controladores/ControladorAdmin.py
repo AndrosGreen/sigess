@@ -72,3 +72,21 @@ def modificaAdmin(admin):
         sql = 'update admins set nombre=%s, area=%s, correo=%s, esRevisor=%s where idAdmin=%s'
         data = (admin.nombre, admin.area, admin.correo, admin.esRevisor, admin.idAdmin)
     executeStatement(sql, data)
+
+
+def existeAdminPorID(idAdmin):
+    sql = "select count(*) as cuenta from admins where idAdmin=%s"
+    data = idAdmin
+    filas = executeQueryWithData(sql, data)
+    fila = filas[0]
+    existe = True if fila["cuenta"] == 1 else False
+    return existe
+
+
+def eliminaAdminPorID(admin):
+    """Elimina un admin"""
+    if not admin.esRevisor:
+        return
+    sql = "delete from admins where idAdmin=%s"
+    data = admin.idAdmin
+    executeStatement(sql, data)
