@@ -40,7 +40,7 @@ def obtenerAlumnosPreRegistrados():
 @app.route('/alumnos/eliminaPreRegistrado', methods=['POST'])
 @login_required
 @admin_required
-def obtenerAlumnosPreRegistrados():
+def eliminaPreRegistrado():
     """Obtiene alumnos preregistrados"""
     json = request.json
     noControl = json['noControl']
