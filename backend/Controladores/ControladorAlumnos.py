@@ -86,3 +86,18 @@ def obtenerAlumnosPreRegistrados():
     for fila in filas:
         alumnos.append(AlumnoPreRegistro.desdeFila(fila).serialize)
     return alumnos
+
+
+def estaAlumnoPreRegistrado(noControl):
+    sql = "select count(*) as conteo from alumnospreregistro where noControl=%s"
+    data = noControl
+    filas = executeQueryWithData(sql, data)
+    fila = filas[0]
+    existePreRegistro = True if fila["conteo"] == 1 else False
+    return existePreRegistro
+
+
+def eliminaPreRegistrado(noControl):
+    sql = "delete from alumnospreregistro where noControl=%s"
+    data = noControl
+    executeStatement(sql, data)
