@@ -43,7 +43,7 @@ def login():
         nivelDePermiso = 1
     usuario = Usuario(json['usuario'], json['clave'], nivelDePermiso)
     if not ControladorUsuarios.login(usuario):
-        return jsonify("El usuario no existe")
+        return jsonify("El usuario no existe o error en las credenciales")
     else:
         usuarioActual = current_user
         return jsonify({

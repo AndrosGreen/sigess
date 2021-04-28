@@ -35,3 +35,20 @@ def obtenerAlumnosPreRegistrados():
     """Obtiene alumnos preregistrados"""
     alumnos = ControladorAlumnos.obtenerAlumnosPreRegistrados()
     return jsonify(alumnos)
+
+
+@app.route('/alumnos/eliminaPreRegistrado', methods=['POST'])
+@login_required
+@admin_required
+def eliminaPreRegistrado():
+    """Obtiene alumnos preregistrados"""
+    json = request.json
+    noControl = json['noControl']
+    if not ControladorAlumnos.estaAlumnoPreRegistrado(noControl):
+        return{
+            "mensaje": "El alumno no está preregistrado"
+        }
+    ControladorAlumnos.eliminaPreRegistrado(noControl)
+    return{
+        "mensaje": "Alumno eliminado del preregistro exitosamente"
+    }
