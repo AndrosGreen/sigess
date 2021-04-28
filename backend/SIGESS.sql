@@ -59,7 +59,6 @@ DROP TABLE IF EXISTS `SIGESS`.`AsignacionesAlumnos` ;
 CREATE TABLE IF NOT EXISTS `SIGESS`.`AsignacionesAlumnos` (
   `noControl` CHAR(9) NOT NULL,
   `idAsignacion` INT NOT NULL,
-  `rutaDoc` VARCHAR(150) NOT NULL,
   `estado` ENUM('P', 'A', 'R') NOT NULL,
   `nota` VARCHAR(255) NULL,
   PRIMARY KEY (`noControl`, `idAsignacion`),
