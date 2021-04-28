@@ -2,6 +2,7 @@ from Modelos.AlumnoPreRegistro import AlumnoPreRegistro
 from Modelos.Alumno import Alumno
 from sigess.db import executeStatement, executeQueryWithData, executeQuery
 
+
 def obtenAlumnoPorNombre(nombreAlumno):
     """Obtiene un alumno dado un nombre"""
     sql = "select * from alumnos where nombre = %s limit 1"
@@ -13,10 +14,13 @@ def obtenAlumnoPorNombre(nombreAlumno):
         fila = filas[0]
         return Alumno.desdeFila(fila)
 
+
 def creaAlumno(alumno):
     """Crea un alumno y lo devuelve si sale bien o None si no"""
-    sql = "insert into alumnos values(%s, %s, %s, %s, %s, md5(%s), %s, %s)"
-    data = (alumno.noControl, alumno.nombre, alumno.apPaterno, alumno.apMaterno, alumno.correo, alumno.clave, alumno.carrera,alumno.programa, alumno.encargado, alumno.empresa)
+    sql = "insert into alumnos values(%s, %s, %s, %s, %s, md5(%s), %s, %s, %s, %s, %s)"
+    data = (alumno.noControl, alumno.nombre, alumno.apPaterno,
+            alumno.apMaterno, alumno.correo, alumno.clave,
+            alumno.carrera, alumno.programa, alumno.encargado, alumno.empresa)
     executeStatement(sql, data)
     return obtenAlumnoPorNombre(alumno.nombre)
 
@@ -30,14 +34,18 @@ def eliminaAlumno(noControl):
 
 def modificaAlumno(alumno):
     """Modifica un alumno"""
-    sql = 'update alumnos set nombre=%s, apPaterno=%s, apMaterno=%s, correo=%s, clave=md5(%s), carrera=%s, programa=%s, encargado=%s, empresa=%s where noControl=%s'
-    data = (alumno.nombre, alumno.apPaterno, alumno.apMaterno, alumno.correo, alumno.clave, alumno.carrera, alumno.programa, alumno.encargado, alumno.empresa,alumno.noControl)
+    sql = 'update alumnos set nombre=%s, ' \
+          'apPaterno=%s, apMaterno=%s, correo=%s, clave=md5(%s), ' \
+          'carrera=%s, programa=%s, encargado=%s, institucion=%s where noControl=%s'
+    data = (alumno.nombre, alumno.apPaterno, alumno.apMaterno,
+            alumno.correo, alumno.clave, alumno.carrera, alumno.programa,
+            alumno.encargado, alumno.empresa, alumno.noControl)
     executeStatement(sql, data)
 
 
 def registraAlumno(alumno):
     """Checa si un alumno está preregistrado y si es así lo registra, sino regresa None"""
-    if existeAlumnoAPreRegistrar(alumno)==True:
+    if existeAlumnoAPreRegistrar(alumno):
         creaAlumno(alumno)
     else:
         return None
@@ -46,6 +54,7 @@ def registraAlumno(alumno):
 def listaAlumnos():
     rows = executeQuery("select * from alumnos")
     return rows  
+
 
 def existeAlumnoAPreRegistrar(alumno):
     """Consulta si existe el alumno a preregistrar en el pre registro o en los registros"""
