@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `SIGESS`.`AlumnosRequisitos` ;
 CREATE TABLE IF NOT EXISTS `SIGESS`.`AlumnosRequisitos` (
   `noControl` CHAR(9) NOT NULL,
   `idRequisito` INT NOT NULL,
-  `cumple` ENUM('T', 'F') NOT NULL,
+  `cumple` ENUM('P', 'A', 'R') NOT NULL,
   PRIMARY KEY (`noControl`, `idRequisito`),
   INDEX `fk_ALUMNOS_has_REQUISITOS_REQUISITOS1_idx` (`idRequisito` ASC) VISIBLE,
   INDEX `fk_ALUMNOS_has_REQUISITOS_ALUMNOS1_idx` (`noControl` ASC) VISIBLE,
@@ -140,18 +140,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SIGESS`.`ProgramasServicio`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SIGESS`.`ProgramasServicio` ;
-
-CREATE TABLE IF NOT EXISTS `SIGESS`.`ProgramasServicio` (
-  `idProgramaServicio` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`idProgramaServicio`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `SIGESS`.`AlumnosPreRegistro`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `SIGESS`.`AlumnosPreRegistro` ;
@@ -163,6 +151,45 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`AlumnosPreRegistro` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `SIGESS`.`DocumentosAlumnos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SIGESS`.`DocumentosAlumnos` ;
+
+CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
+  `idDocumento` INT NOT NULL,
+  `documento` MEDIUMBLOB NOT NULL,
+  `AsignacionesAlumnos_noControl` CHAR(9) NOT NULL,
+  `AsignacionesAlumnos_idAsignacion` INT NOT NULL,
+  PRIMARY KEY (`idDocumento`, `AsignacionesAlumnos_noControl`, `AsignacionesAlumnos_idAsignacion`),
+  INDEX `fk_Documentos_AsignacionesAlumnos1_idx` (`AsignacionesAlumnos_noControl` ASC, `AsignacionesAlumnos_idAsignacion` ASC) VISIBLE,
+  CONSTRAINT `fk_Documentos_AsignacionesAlumnos1`
+    FOREIGN KEY (`AsignacionesAlumnos_noControl` , `AsignacionesAlumnos_idAsignacion`)
+    REFERENCES `SIGESS`.`AsignacionesAlumnos` (`noControl` , `idAsignacion`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SIGESS`.`DocumentosAdmin`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SIGESS`.`DocumentosAdmin` ;
+
+CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
+  `idDocumento` INT NOT NULL,
+  `documento` MEDIUMBLOB NOT NULL,
+  `Asignaciones_idAsignacion` INT NOT NULL,
+  PRIMARY KEY (`idDocumento`, `Asignaciones_idAsignacion`),
+  INDEX `fk_DocumentosAdmin_Asignaciones1_idx` (`Asignaciones_idAsignacion` ASC) VISIBLE,
+  CONSTRAINT `fk_DocumentosAdmin_Asignaciones1`
+    FOREIGN KEY (`Asignaciones_idAsignacion`)
+    REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -170,18 +197,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 insert into Alumnos values
 ('S18120183', 'Daniel', 'Cerna', 'Torres', 'cernadaniel32@gmail.com', MD5('KKCK'), '4451091780', 'Sistemas computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
 insert into Admins values
-(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F'),
-(2, 'Gema', 'Ingles', 'pidielpez@gmail.com', md5('InEnglishPlease'), 'T'),
-(3, 'Gema', 'Ingles', 'pidielpez@gmail.com', md5('InEnglishPlease'), 'T'),;
+(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F');
 insert into AlumnosPreRegistro values
 ('S18120160', md5('MAMR'));
-insert into requisitos values
-(null, 'Ingles', 2, 'Valida que tenga los 5 primeros niveles de ingles'),
-(null, 'Extracurricular', 3, 'Valida que tenga extracurriculares cumplodps niveles de ingles'),;
-INSERT INTO alumnos VALUES ('S18120124', 'Miguel', 'Moreno', 'Ruiz', 'mikemamr@gmail.com', 'kkck', '4451233445', 'Sistemas Computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
-insert into alumnosrequisitos values
-('S18120183', 2, 'F'), 
-('S18120183', 3, 'T'), 
-('S18120124', 2, 'T'), 
-('S18120124', 3, 'F');
 -- end attached script 'script'
