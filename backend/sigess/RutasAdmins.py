@@ -92,21 +92,3 @@ def modificarAdmin():
         'mensaje': 'Admin modificado correctamente',
         'Admin': admin.serialize
     }
-
-
-@app.route('/admins/eliminarAdmin', methods=['POST'])
-@login_required
-@admin_required
-def eliminarAdmin():
-    """Elimina un admin si es que existe"""
-    json = request.json
-    idAdmin = json['idAdmin']  # Cuenta como fila
-    if not ControladorAdmin.existeAdminPorID(idAdmin):
-        return {
-            'mensaje': 'El admin a eliminar no existe'
-        }
-    ControladorAdmin.eliminaAdminPorID(idAdmin)
-    return {
-        'mensaje': 'Admin eliminado correctamente',
-    }
-
