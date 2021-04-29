@@ -39,21 +39,28 @@ def obtenerRequisito(id_requisito):
 # Recibe un alumno y devuelve los requisitos de este
 def listaRequisitosAlumno(data):
     """Obtiene una lista de requisitos del alumnos recibido"""
-    sql = "select req.* from requisitos req join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
+    sql = "select req.*, al_req.cumple from requisitos req join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
     rows = executeQueryWithData(sql, data)
-    requirements = []
-    for row in rows:
-        requirements.append(Requisito.desdeFila(row).serialize)
-    return requirements
+    return rows
 
 
 # Recibe los requisitos y los alumnos para validar esos requisitos
 def validarRequisitosAlumno(requisitoAlumnos):
     """Valida los requisitos a los alumnos ingresados"""
     sql = ""
-    if requisitoAlumnos.cumple == "T":
-        sql = "update alumnosrequisitos set cumple='T' where noControl=%s and idRequisito=%s"
+    if requisitoAlumnos.cumple == "A":
+        sql = "update alumnosrequisitos set cumple='A' where noControl=%s and idRequisito=%s"
     else:
-        sql = "update alumnosrequisitos set cumple='F' where noControl=%s and idRequisito=%s"
+        sql = "update alumnosrequisitos set cumple='R' where noControl=%s and idRequisito=%s"
     data = (requisitoAlumnos.Alumno, requisitoAlumnos.Requisito)
     executeStatement(sql, data)
+
+# Devuelve todos los requisitos
+def listaRequisitos():
+    """Obtiene la lista de los requisitos ingresados"""
+    sql = "select * from requisitos"
+    requeriments = []
+    rows  = executeQuery(sql)
+    for row in rows:
+        requeriments.append(Requisito.desdeFila(row).serialize)
+    return requeriments

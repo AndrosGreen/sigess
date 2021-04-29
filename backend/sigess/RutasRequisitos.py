@@ -56,7 +56,7 @@ def obtenerRequisito():
     return resp
 
 
-@app.route('/requisitos/estatusAlumno', methods=['POST'])
+@app.route('/requisitos/estatusAlumno', methods=['GET'])
 @login_required
 # @alumno_required
 def obtenerRequistosAlumno():
@@ -83,3 +83,13 @@ def validarRequisitos():
     return jsonify({
         "mensaje": "Se valido los requisitos para los alumnos"
     })
+
+@app.route('/requisitos/obtenerTodos', methods=['GET'])
+@login_required
+# @admin_required
+def obtenerRequisitosTodos():
+    """"Obtiene todos los requisitos ingresados"""
+    requirements = ControladorRequisitos.listaRequisitos()
+    return jsonify(requirements)
+
+
