@@ -203,7 +203,7 @@ class ManageUsers extends React.Component {
     render(){
         return (
             
-            <div className="container" style={{marginTop: "20px"}}>
+            <div className="container">
                 <h3 style={{marginBottom: "20px"}}>Gestión de Usuarios</h3>
                 <button className="btn btn-success" onClick={this.handleOpenAddStudent}> Agregar Alumno </button>
                 <button className="btn btn-success" onClick={this.handleOpenAddAdmin} style={{margin: "10px"}}> Agregar Administrador </button>

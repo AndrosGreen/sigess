@@ -25,7 +25,7 @@ class Navbar extends React.Component {
                         <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "#198b34"}}>
                             <div className="container-fluid">
                                 
-                                <Link className="navbar-brand" to="/"> SiGeSS</Link>
+                                <Link className="navbar-brand" to="/gestionar/usuarios"> SiGeSS</Link>
                                 
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -36,6 +36,9 @@ class Navbar extends React.Component {
                                     <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                                         <li className="nav-item">
                                             <Link className="nav-link active" to="/gestionar/usuarios"> Gestionar Usuarios </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link active" to="/gestionar/requisitos"> Gestionar Requisitos </Link>
                                         </li>         
                                     </ul>
         
@@ -100,7 +103,7 @@ class Navbar extends React.Component {
                                             <Link className="nav-link active" to="/main/alumno"> Main Alumno </Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link active"> Pre regristro </Link>
+                                            <Link className="nav-link active"> Requisitos </Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link className="nav-link active" to="/main/alumno"> Actividades </Link>
@@ -134,13 +137,7 @@ class Navbar extends React.Component {
                                 <div className="collapse navbar-collapse" id="navbarScroll">
                                     <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                                         <li className="nav-item">
-                                            <Link className="nav-link active" to="/main/alumno"> Main Alumno </Link>
-                                        </li>
-                                        <li className="nav-item">
                                             <Link className="nav-link active"> Pre regristro </Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="nav-link active" to="/main/alumno"> Actividades </Link>
                                         </li>         
                                     </ul>
         
