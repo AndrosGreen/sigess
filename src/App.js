@@ -3,6 +3,7 @@ import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Navbar from './pages/components/Navbar';
 import LogIn from './pages/LogIn';
 import MainStudent from './pages/MainStudent';
+import ManageRequisites from './pages/ManageRequisites';
 import ManageUsers from './pages/ManageUsers';
 import NotFoundPage from './pages/NotFoundPage';
 import ValidateRequirements from './pages/ValidateRequirements';
@@ -25,11 +26,12 @@ class App extends React.Component {
             <div>
                 <BrowserRouter>
                     <Navbar/>
-                    <div className="container">
+                    <div className="container" style={{marginTop: "20px"}}>
                         <Switch>
                             <Route path="/" exact component={Main} />
                             <Route path="/main/alumno" exact component={MainStudent} />
                             <Route path="/gestionar/usuarios" exact component={ManageUsers} />
+                            <Route path="/gestionar/requisitos" exact component={ManageRequisites} />
                             <Route path="/login" exact component={LogIn} />
                             <Route path="/validar/requisitos" exact component={ValidateRequirements} /> 
                             <Route path="*" component={NotFoundPage} />
