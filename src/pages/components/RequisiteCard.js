@@ -5,14 +5,30 @@ class RequisiteCard extends React.Component {
         return(
             <div className = "card" style={{ width : "22rem" , marginTop : "10px" }}>
                 <div class="card-header">
-                    <h5>5 niveles Ingles</h5>
+                    <h5>{this.props.nombre}</h5>
                 </div>
                 <div className="card-body">
-                    <h6 className="card-subtitle mb-2 text-muted"> Gema </h6>
+                    <h6 className="card-subtitle mb-2 text-muted"> {this.props.admin} </h6>
                     <p>
-                        Tiene que tener liberados sus 5 niveles de ingles o 
-                        en su defecto tener un 100 en el toefl.
+                        {this.props.detalle}
                     </p>
+                    <button 
+                        className="btn btn-warning" 
+                        style={{marginRight: "10px"}}
+                        onClick={() => this.props.handleOpenEdit(
+                            this.props.id,
+                            this.props.nombre,
+                            this.props.detalle
+                        ) }
+                    >
+                        Editar
+                    </button>
+                    <button 
+                        className="btn btn-danger"
+                        onClick={ () => this.props.handleOpenDelete( this.props.id, this.props.nombre ) }  
+                    > 
+                            Eliminar 
+                    </button>
                 </div>
             </div>
         );

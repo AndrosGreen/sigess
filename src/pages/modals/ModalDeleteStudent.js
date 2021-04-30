@@ -1,7 +1,6 @@
 import React from 'react';
 import {Modal,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { render } from '@testing-library/react';
 
 class ModalDeleteStudent extends React.Component{
 
