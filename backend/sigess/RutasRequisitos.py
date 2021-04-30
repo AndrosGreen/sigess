@@ -5,6 +5,7 @@ from Modelos.RequisitoAlumno import RequisitoAlumno
 from Modelos.Requisito import Requisito
 
 from sigess import app
+from sigess.utils import admin_required
 
 
 @app.route('/requisitos/crea', methods=['POST'])
@@ -56,7 +57,7 @@ def obtenerRequisito():
     return resp
 
 
-@app.route('/requisitos/estatusAlumno', methods=['GET'])
+@app.route('/requisitos/estatusAlumno', methods=['POST'])
 @login_required
 # @alumno_required
 def obtenerRequistosAlumno():
@@ -69,7 +70,7 @@ def obtenerRequistosAlumno():
 
 @app.route('/requisitos/validarRequisitos', methods=['POST'])
 @login_required
-# @admin_required
+@admin_required
 def validarRequisitos():
     """"Valida los requisitos dados a los alumnos"""
     json = request.json
@@ -84,12 +85,19 @@ def validarRequisitos():
         "mensaje": "Se valido los requisitos para los alumnos"
     })
 
-@app.route('/requisitos/obtenerTodos', methods=['GET'])
+
+@app.route('/requisitos/actualizaRequisito', methods=['POST'])
 @login_required
-# @admin_required
-def obtenerRequisitosTodos():
-    """"Obtiene todos los requisitos ingresados"""
-    requirements = ControladorRequisitos.listaRequisitos()
-    return jsonify(requirements)
-
-
+@admin_required
+def actualizarRequisito():
+    """"Valida los requisitos dados a los alumnos"""
+    json = request.json
+    requisito = Requisito.desdeFila(json)
+    if not ControladorRequisitos.existeRequisito(requisito):
+        return jsonify({
+            "mensaje": "El requisito no existe"
+        })
+    ControladorRequisitos.actualizarRequisito(requisito)
+    return jsonify({
+        "mensaje": "Se actualizó el requisito exitosamente"
+    })

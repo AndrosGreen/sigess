@@ -39,9 +39,31 @@ def obtenerRequisito(id_requisito):
 # Recibe un alumno y devuelve los requisitos de este
 def listaRequisitosAlumno(data):
     """Obtiene una lista de requisitos del alumnos recibido"""
+<<<<<<< HEAD
     sql = "select req.*, al_req.cumple from requisitos req join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
+=======
+    sql = "select req.* from requisitos req " \
+          "join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
+>>>>>>> bdad482 (Agregado actualizar requisito)
     rows = executeQueryWithData(sql, data)
     return rows
+
+
+def actualizarRequisito(requisito):
+    """Actualiza un requisito"""
+    sql = "update requisitos set nombre=%s, detalleARevisar=%s where idRequisito=%s"
+    datos = (requisito.nombre, requisito.detalleARevisar, requisito.idRequisito)
+    executeStatement(sql, datos)
+
+
+def existeRequisito(requisito):
+    """Verifica si existe un requisito"""
+    sql = "select count(*) as cuenta from requisitos where idRequisito=%s"
+    data = requisito.idRequisito
+    filas = executeQueryWithData(sql, data)
+    fila = filas[0]
+    cuenta = fila["cuenta"]
+    return cuenta > 0
 
 
 # Recibe los requisitos y los alumnos para validar esos requisitos
