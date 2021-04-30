@@ -5,18 +5,27 @@ import {Modal,Button} from 'react-bootstrap';
 class ModalAddRequisite extends React.Component {
     
     state = {
-        idAdmin : 0,
-        admin : "Revisor",
         name: "",
         detail: "",
 
-        adminError : "",
         nameError : "",
         detailError : ""
     }
 
+    componentDidUpdate(prevProps){
+        if(this.props.name !== prevProps.name){
+            this.setState({
+                name: this.props.name,
+                detail: this.props.detail
+            });
+        }
+    }
+
+    /*******************************************************
+     *                         Validar Formulario
+     ******************************************************/
+
     validate  = () => {
-        let adminError = "";
         let nameError = "";
         let detailError = "";
 
@@ -36,14 +45,9 @@ class ModalAddRequisite extends React.Component {
             detailError = "Detalle no puede estar en blanco";
         }
 
-        // admin sin seleccionar.
-        if(this.state.idAdmin === 0){
-            adminError = "Debes seleccionar a un revisor.";
-        }
+        this.setState({nameError, detailError});
 
-        this.setState({adminError, nameError, detailError});
-
-        if(adminError || nameError || detailError){
+        if(nameError || detailError){
             return false;
         }
         return true;
@@ -59,32 +63,20 @@ class ModalAddRequisite extends React.Component {
     }
 
     // si los datos son correctos arrega el requisito.
-    handleAddRequisite = () => {
+    handleEditRequisite = () => {
         if( this.validate() ){
-            this.props.addRequisite(this.state.name, this.state.idAdmin, this.state.detail);
+            this.props.editRequisite(this.props.idRequisite, this.state.name, this.state.detail);
             this.handleClose();
         }
     }
 
     render(){
 
-        const admins = this.props.admins.map (
-            admin => {
-                console.log("hola");
-                return(
-                    <li><a class="dropdown-item" onClick={() => 
-                        this.setState({admin: admin.nombre, idAdmin: admin.idAdmin})}> 
-                        {admin.nombre}
-                    </a></li>
-                );
-            }
-        );
-
         return (
             <div>
                 <Modal show={this.props.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Agregar Requisito</Modal.Title>
+                        <Modal.Title>Editar Requisito</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
@@ -97,19 +89,6 @@ class ModalAddRequisite extends React.Component {
                                     value = {this.state.name}
                                 />
                                 <p style={{color: "red"}}>{this.state.nameError}</p>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Revisor:</label>
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {this.state.admin}
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        {admins}
-                                    </ul>
-                                </div>
-                                <p style={{color: "red"}}>{this.state.adminError}</p>
                             </div>
 
                             <div className="form-group">
@@ -127,7 +106,7 @@ class ModalAddRequisite extends React.Component {
 
                     <Modal.Footer>
                         <Button variant="danger">Cancelar</Button>
-                        <Button variant="primary" onClick={this.handleAddRequisite}>Agregar</Button>
+                        <Button variant="primary" onClick={this.handleEditRequisite}>Actualizar</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

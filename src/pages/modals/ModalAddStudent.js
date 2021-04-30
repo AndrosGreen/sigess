@@ -1,7 +1,6 @@
 import React from 'react';
 import {Modal,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import withAuthSuperAdmin from '../Auth/withAuthSuperAdmin';
 
 class ModalAddStudents extends React.Component{
 
@@ -21,7 +20,7 @@ class ModalAddStudents extends React.Component{
         let passwordError = "";
 
         // longitud
-        if( this.state.noControl.trim().length != 9 ){
+        if( this.state.noControl.trim().length !== 9 ){
             noControlError = "El numero de control debe tener 9 caracteres";
         }
         if( this.state.password.trim().length < 8 || this.state.password.trim().length > 32){
