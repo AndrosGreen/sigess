@@ -92,3 +92,17 @@ def modificarAdmin():
         'mensaje': 'Admin modificado correctamente',
         'Admin': admin.serialize
     }
+
+
+@app.route('/admins/obtenerAdminsSinRequisito', methods=['get'])
+@login_required
+@admin_required
+def adminsSinRequisito():
+    """Modifica un admin si es que existe"""
+    adminsSinSerializar = ControladorAdmin.obtenerAdminsSinRequisito()
+    adminsSerializados = []
+    for admin in adminsSinSerializar:
+        adminsSerializados.append(admin.serialize)
+    return {
+        'admins': adminsSerializados
+    }
