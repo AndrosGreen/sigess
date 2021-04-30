@@ -10,7 +10,7 @@ class Requisito:
         return cls(
             fila['idRequisito'],
             fila['nombre'],
-            fila['revisadoPor'],
+            fila.get('revisadoPor', ""),
             fila['detalleARevisar']
         )
 

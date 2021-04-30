@@ -1,5 +1,5 @@
 from Modelos.Admin import Admin
-from sigess.db import executeStatement, executeQueryWithData
+from sigess.db import executeStatement, executeQueryWithData, executeQuery
 
 
 def obtenAdminPorID(idAdmin):
@@ -90,3 +90,12 @@ def eliminaAdminPorID(admin):
     sql = "delete from admins where idAdmin=%s"
     data = admin.idAdmin
     executeStatement(sql, data)
+
+
+def obtenerAdminsSinRequisito():
+    sql = "select a.* from admins a left join requisitos r on a.idAdmin = r.revisadoPor where r.idRequisito is null;"
+    admins = []
+    filas = executeQuery(sql)
+    for fila in filas:
+        admins.append(Admin.desdeFila(fila))
+    return admins
