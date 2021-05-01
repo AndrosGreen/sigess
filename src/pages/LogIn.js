@@ -45,7 +45,7 @@ class LogIn extends React.Component {
             });
         }
         console.log(response);
-        if(response?.data === "El usuario no existe"){
+        if(response?.data === "El usuario no existe o error en las credenciales"){
             this.props.history.push("/");
         }
         else if(response.status === 200){

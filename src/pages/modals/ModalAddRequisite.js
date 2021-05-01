@@ -62,6 +62,16 @@ class ModalAddRequisite extends React.Component {
     handleAddRequisite = () => {
         if( this.validate() ){
             this.props.addRequisite(this.state.name, this.state.idAdmin, this.state.detail);
+            this.setState({
+                idAdmin : 0,
+                admin : "Revisor",
+                name: "",
+                detail: "",
+
+                adminError : "",
+                nameError : "",
+                detailError : ""
+            });
             this.handleClose();
         }
     }

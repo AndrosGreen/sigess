@@ -29,7 +29,7 @@ class ListRequisites extends React.Component {
                             nombre = {requisite.nombre}
                             admin = {admin.Admin.nombre}
                             detalle = {requisite.detalleARevisar}
-                            handleOpenDelete = {this.props.handleOpen}
+                            handleOpenDelete = {this.props.handleOpenDelete}
                             handleOpenEdit = {this.props.handleOpenEdit}
                         />
                     );
