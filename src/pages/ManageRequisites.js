@@ -21,6 +21,10 @@ class ManageRequisites extends React.Component {
     }
 
     componentDidMount (){
+        this.reloadRequisitesAdmins();
+    }
+
+    reloadRequisitesAdmins = () => {
         this.getAdmins();
         this.getRequisites();
     }
@@ -62,12 +66,18 @@ class ManageRequisites extends React.Component {
         });
         console.log(response);
         this.handleCloseDeleteRequisite();
-        this.getRequisites();
+        this.reloadRequisitesAdmins();
     }
 
     // actualiza un requisito
     editRequisite = async (id, name, detail) => {
-        // aqui va codigo para actualizar
+        const response = await sigess.post("/requisitos/actualizaRequisito",{
+            idRequisito: id,
+            nombre: name,
+            detalleARevisar: detail
+        });
+        console.log(response);
+        this.reloadRequisitesAdmins();
     }
 
     // agrega un requisito
@@ -78,6 +88,7 @@ class ManageRequisites extends React.Component {
             "detalleARevisar": detalleARevisar
         });
         this.getRequisites();
+        this.reloadRequisitesAdmins();
         console.log(response);
     }
 
@@ -89,8 +100,8 @@ class ManageRequisites extends React.Component {
 
     // obtiene todos los admins
     getAdmins = async () => {
-        const response = await sigess.get("/admins/obtenerAdmins",{});
-        this.setState({admins: response.data});
+        const response = await sigess.get("/admins/obtenerAdminsSinRequisito",{});
+        this.setState({admins: response.data.admins});
     }
 
     // obtiene un admin
