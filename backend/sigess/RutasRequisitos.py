@@ -101,3 +101,10 @@ def actualizarRequisito():
     return jsonify({
         "mensaje": "Se actualizó el requisito exitosamente"
     })
+
+@app.route('/requisitos/obtenerTodos', methods=['GET'])
+@login_required
+def obtenerRequisitosTodos():
+    """"Obtiene la lista de todos los requistos ingresados"""
+    requirements = ControladorRequisitos.listaRequisitos()
+    return jsonify(requirements)
