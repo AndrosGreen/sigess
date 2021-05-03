@@ -11,7 +11,7 @@ class Register extends React.Component {
         gmail : '',
         clave : '',
         telefono : '',
-        carrera : '',
+        carrera : 'Selecciona carrera',
         programa : '',
         encargado : '',
         institucion : '',
@@ -65,8 +65,8 @@ class Register extends React.Component {
         if( this.state.telefono.trim().length !=10 || this.state.telefono.trim().length != 0){
             telefonoError = "Telefono ingresado no valido debe tener 10 digitos";
         }
-        if( this.state.carrera.trim().length < 8 || this.state.carrera.trim().length > 30){
-            carreraError = "La longitud debe ser entre 8 y 30 caracteres";
+        if( this.state.carrera === 'Selecciona carrera'){
+            carreraError = "La carrera no ha sido seleccionada";
         }
         if( this.state.programa.trim().length < 10 || this.state.programa.trim().length > 40){
             programaError = "La longitud debe ser entre 10 y 40 caracteres";
@@ -97,9 +97,6 @@ class Register extends React.Component {
         if(!this.state.clave){
             claveError = "Clave no puede estar en blanco";
         }
-        if(!this.state.carrera){
-            carreraError = "Nombre de Carrera no puede estar en blanco";
-        }
         if(!this.state.programa){
             programaError = "Tienes que selccionar un programa no puede estar en blanco";
         }
@@ -123,7 +120,39 @@ class Register extends React.Component {
         return true;
     };
 
-    
+    handleAddPreRequisite = () => {
+        if( this.validate() ){
+            this.addPreRequisite(this.state.noControl, this.state.nombre, this.state.apPaterno,
+                                    this.state.apMaterno, this.state.gmail, this.state.clave, this.state.telefono,
+                                    this.state.carrera, this.state.programa, this.state.encargado, this.state.institucion);
+            this.setState({
+                noControl : '',
+                nombre : '',
+                apPaterno : '',
+                apMaterno : '',
+                gmail : '',
+                clave : '',
+                telefono : '',
+                carrera : 'Selecciona carrera',
+                programa : '',
+                encargado : '',
+                institucion : '',
+
+                noControlError : '',
+                nombreError : '',
+                apPaternoError : '',
+                apMaternoError : '',
+                gmailError : '',
+                claveError : '',
+                telefonoError : '',
+                carreraError : '',
+                programaError : '',
+                encargadoError : '',
+                institucionError : ''
+            });
+        }
+    }
+
     render(){
         return (
             <div>
@@ -196,19 +225,26 @@ class Register extends React.Component {
                                 />
                                 <p style={{color: "red"}}>{this.state.telefonoError}</p>
                             </div>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Selecciona una
+                            
+                            <div className="form-group">
+                                <label>
+                                    Carrera : *
+                                </label>
+                                <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {this.state.carrera}
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Sistemas Computacionales</a>
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Ing. Industrial</a>
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Ing. Gestion Empresarial</a>
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Gastronomía</a>
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Ing. Electronica</a>
-                                    <a class="dropdown-item" onClick={this.state.carrera}>Ing. Ambiental</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Sistemas Computacionales"})}>Ing. Sistemas Computacionales</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Ambiental"})}>Ing. Ambiental</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Electronica"})}>Ing. Electronica</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Lic. Gastronomía"})}>Lic. Gastronomía</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Gestion Empresarial"})}>Ing. Gestion Empresarial</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Industrial"})}>Ing. Industrial</a></li>
+                                </ul>
                                 </div>
                             </div>
+                            
                             <div className="form-group">
                                 <label>Programa : *</label>
                                 <input 
@@ -239,6 +275,11 @@ class Register extends React.Component {
                                 />
                                 <p style={{color: "red"}}>{this.state.institucionError}</p>
                             </div>
+                            <div className="form-group">
+                                <button type="button" className="btn btn-primary" >Agregar</button>
+                                <button type="button" className="btn btn-danger" onClick={this.handleAddPreRequisite}>Cancelar</button>
+                            </div>
+
 
                 </form>
                 

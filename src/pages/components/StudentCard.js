@@ -6,7 +6,11 @@ class StudentCard extends React.Component{
             <div className = "card" style={{ width : "22rem" , marginTop : "10px" }}>
                 <div className="card-body">
                     <h5 className="card-title"> Número de control : {this.props.noControl} </h5>
-                    
+                    <button 
+                        className="btn btn-secondary" style={{margin : "10px"}}
+                    > 
+                        Eliminar
+                    </button>
                 </div>
             </div>
         );
