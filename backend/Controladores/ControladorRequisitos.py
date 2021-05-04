@@ -39,8 +39,7 @@ def obtenerRequisito(id_requisito):
 # Recibe un alumno y devuelve los requisitos de este
 def listaRequisitosAlumno(data):
     """Obtiene una lista de requisitos del alumnos recibido"""
-    sql = "select req.* from requisitos req " \
-          "join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
+    sql = "select req.*, al_req.cumple from requisitos req join alumnosrequisitos al_req on req.idRequisito=al_req.idRequisito and %s=al_req.noControl"
     rows = executeQueryWithData(sql, data)
     return rows
 
