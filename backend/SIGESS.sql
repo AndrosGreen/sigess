@@ -157,7 +157,8 @@ DROP TABLE IF EXISTS `SIGESS`.`DocumentosAlumnos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
   `idDocumento` INT NOT NULL,
-  `documento` MEDIUMBLOB NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `documento` LONGTEXT NOT NULL,
   `AsignacionesAlumnos_noControl` CHAR(9) NOT NULL,
   `AsignacionesAlumnos_idAsignacion` INT NOT NULL,
   PRIMARY KEY (`idDocumento`, `AsignacionesAlumnos_noControl`, `AsignacionesAlumnos_idAsignacion`),
@@ -177,6 +178,7 @@ DROP TABLE IF EXISTS `SIGESS`.`DocumentosAdmin` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
   `idDocumento` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
   `documento` MEDIUMBLOB NOT NULL,
   `Asignaciones_idAsignacion` INT NOT NULL,
   PRIMARY KEY (`idDocumento`, `Asignaciones_idAsignacion`),
@@ -199,4 +201,10 @@ insert into Admins values
 (1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F');
 insert into AlumnosPreRegistro values
 ('S18120160', md5('MAMR'));
+
+create table documentosPrueba(
+	id int primary key auto_increment,
+    nombre varchar(60),
+    archivo longtext
+);
 -- end attached script 'script'

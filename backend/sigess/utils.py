@@ -1,5 +1,7 @@
 from functools import wraps
+from base64 import b64decode
 
+from flask import make_response
 from flask_login import current_user
 
 
@@ -43,3 +45,14 @@ def alumno_required(func):
         return func(*args, **kwargs)
 
     return decorated_view
+
+
+def generaVistaPDF(b64):
+    """
+    Genera una respuesta para ver un archivo como pdf
+    dadoa una cadena base64 como entrada
+    """
+    binario = b64decode(b64)
+    respuesta = make_response(binario)
+    respuesta.headers['Content-Type'] = 'application/pdf'
+    return respuesta
