@@ -67,13 +67,13 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`AsignacionesAlumnos` (
   CONSTRAINT `fk_ALUMNOS_has_ASIGNACIONES_ALUMNOS`
     FOREIGN KEY (`noControl`)
     REFERENCES `SIGESS`.`Alumnos` (`noControl`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_ALUMNOS_has_ASIGNACIONES_ASIGNACIONES1`
     FOREIGN KEY (`idAsignacion`)
     REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`Requisitos` (
   CONSTRAINT `fk_REQUISITOS_ADMINS1`
     FOREIGN KEY (`revisadoPor`)
     REFERENCES `SIGESS`.`Admins` (`idAdmin`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -128,13 +128,13 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`AlumnosRequisitos` (
   CONSTRAINT `fk_ALUMNOS_has_REQUISITOS_ALUMNOS1`
     FOREIGN KEY (`noControl`)
     REFERENCES `SIGESS`.`Alumnos` (`noControl`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_ALUMNOS_has_REQUISITOS_REQUISITOS1`
     FOREIGN KEY (`idRequisito`)
     REFERENCES `SIGESS`.`Requisitos` (`idRequisito`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -165,8 +165,8 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
   CONSTRAINT `fk_Documentos_AsignacionesAlumnos1`
     FOREIGN KEY (`AsignacionesAlumnos_noControl` , `AsignacionesAlumnos_idAsignacion`)
     REFERENCES `SIGESS`.`AsignacionesAlumnos` (`noControl` , `idAsignacion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -184,8 +184,8 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
   CONSTRAINT `fk_DocumentosAdmin_Asignaciones1`
     FOREIGN KEY (`Asignaciones_idAsignacion`)
     REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
