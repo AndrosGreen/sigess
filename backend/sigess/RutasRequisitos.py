@@ -57,7 +57,7 @@ def obtenerRequisito():
     return resp
 
 
-@app.route('/requisitos/estatusAlumno', methods=['POST'])
+@app.route('/requisitos/estatusAlumno', methods=['GET'])
 @login_required
 # @alumno_required
 def obtenerRequistosAlumno():
