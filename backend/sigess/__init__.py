@@ -27,6 +27,7 @@ from sigess import RutasUsuarios
 from sigess import RutasAlumnos
 from sigess import RutasRequisitos
 from sigess import RutasAdmins
+from sigess import RutasPDFEjemplo
 
 if __name__ == "__main__":
     app.run()
