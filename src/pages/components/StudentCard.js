@@ -8,6 +8,7 @@ class StudentCard extends React.Component{
                     <h5 className="card-title"> Número de control : {this.props.noControl} </h5>
                     <button 
                         className="btn btn-secondary" style={{margin : "10px"}}
+                        onClick={ () => { this.props.handleOpenDeleteStudent( this.props.noControl); } } 
                     > 
                         Eliminar
                     </button>
