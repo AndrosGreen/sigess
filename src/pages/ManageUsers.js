@@ -55,7 +55,7 @@ class ManageUsers extends React.Component {
             noControl : noControl,
             passwordStudent : passwordStudent
         }); 
-    }
+    }*/
 
     handleCloseDeleteStudent = () => this.setState({showDeleteStudent : false});
     handleOpenDeleteStudent = ( noControl ) => { 
@@ -63,7 +63,7 @@ class ManageUsers extends React.Component {
             showDeleteStudent : true,
             noControl : noControl
         }); 
-    }*/
+    }
 
     handleCloseAddAdmin = () => this.setState({showAddAdmin : false});
     handleOpenAddAdmin = () => { this.setState( { showAddAdmin : true } ); };
@@ -158,19 +158,24 @@ class ManageUsers extends React.Component {
         this.loadAdmins();
     }
 
-    // eliminar un estudiante con el numero de control
-    /*deleteStudent = async (noControl) =>{
-        const respuesta = await sigess.delete('/students/delete',{
-                data : {
+    /**
+     * elimina un estudiante por su numero de control.
+     * @param {String} noControl - numero de control
+     */
+    deleteStudent = async (noControl) =>{
+        const respuesta = await sigess.post('/alumnos/eliminaPreRegistrado',{
+                
                     noControl : noControl
-                }
+                
             }
         );
         this.handleCloseDeleteStudent();
         this.loadStudents();
-    }*/
-
-    // elimina un administrador con su nombre
+    }
+    /**
+     * elimina un administrador con su numero de id
+     * @param {int} idAdmin - id del administrador
+     */
     deleteAdmin = async (idAdmin) =>{
         const respuesta = await sigess.post('/admins/eliminaAdmin',{
                 idAdmin : idAdmin

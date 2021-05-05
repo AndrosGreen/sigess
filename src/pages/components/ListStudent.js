@@ -10,6 +10,7 @@ class ListStudent extends React.Component{
                     <StudentCard
                         noControl = {student.noControl}
                         passwordStudent = {student.password}
+                        handleOpenDeleteStudent = {this.props.handleOpenDeleteStudent}
                     />
                 );
             }
