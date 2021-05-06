@@ -1,9 +1,9 @@
 import { Redirect } from "react-router-dom";
 
-const withAuthStudent = (Component) => {
+const withAuthStudentRegistered = (Component) => {
     const AuthRoute = () => {
         const isAuth = JSON.parse( sessionStorage.getItem("usuario") );
-        if(isAuth?.nivelDePermisos === 0){
+        if(isAuth?.nivelDePermisos === 1){
             return <Component />
         }
         else {
@@ -13,4 +13,4 @@ const withAuthStudent = (Component) => {
     return AuthRoute;
 };
 
-export default withAuthStudent;
+export default withAuthStudentRegistered;
