@@ -31,6 +31,23 @@ class Register extends React.Component {
     }
 
     /**
+     * valida si el numero de telefono es correcto
+     * @param {string} telefono 
+     * @returns 
+     */
+    telefonoValidate = (telefono) => {
+        if(this.state.telefono.trim().length != 0 && this.state.telefono.trim().length != 10){
+            return false;
+        }
+        for(let i = 0; i < this.state.telefono.trim().length; i++){
+            if(telefono[i] < '0'  || telefono[i] > '9'){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Valida los campos del form.
      * @returns {boolean} - verdadero si estan validados correctamente, falso en caso contrario.
      */
@@ -66,9 +83,6 @@ class Register extends React.Component {
         if( this.state.clave.trim().length < 8 || this.state.clave.trim().length > 32){
             claveError = "La longitud debe ser entre 8 y 32 caracteres";
         }
-        if( this.state.telefono.trim().length !=10 || this.state.telefono.trim().length != 0){
-            telefonoError = "Telefono ingresado no valido debe tener 10 digitos";
-        }
         if( this.state.carrera === 'Selecciona carrera'){
             carreraError = "La carrera no ha sido seleccionada";
         }
@@ -80,6 +94,9 @@ class Register extends React.Component {
         }
         if( this.state.institucion.trim().length < 4 || this.state.institucion.trim().length > 50){
             institucionError = "La longitud debe ser entre 4 y 50 caracteres";
+        }
+        if(!this.telefonoValidate(this.state.telefono)){
+            telefonoError = "Telefono no valido, debe tener 10 digitos";
         }
 
         // verifica si se encuentran casillas vacías
@@ -112,6 +129,7 @@ class Register extends React.Component {
         if( !( /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.gmail) ) ){
             gmailError = "Este no es un correo valido";
         }
+
 
         // cambiar los errores
         this.setState({noControlError,nombreError,apPaternoError,apMaternoError,gmailError,claveError,telefonoError,carreraError,programaError,
