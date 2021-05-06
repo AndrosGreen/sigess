@@ -62,7 +62,7 @@ class LogIn extends React.Component {
                 this.props.history.push("/validar/requisitos");
             }
             else if(currentUser.nivelDePermisos === 1){
-                this.props.history.push("/main/alumno");
+                this.props.history.push("/alumno/requisitos");
             }
             else if ( currentUser.nivelDePermisos === 0){
                 this.props.history.push("/alumno/registro");

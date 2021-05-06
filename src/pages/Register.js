@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import withAuthStudent from './Auth/withAuthStudent';
 
 class Register extends React.Component {
 
@@ -27,7 +28,6 @@ class Register extends React.Component {
         programaError : '',
         encargadoError : '',
         institucionError : ''
-
     }
 
     /**
@@ -306,10 +306,6 @@ class Register extends React.Component {
                             >
                                 Registrarme
                             </button>
-                            
-
-
-
                 </form>
                 
             </div>
@@ -317,4 +313,4 @@ class Register extends React.Component {
     }
 }
 
-export default withRouter( Register );
+export default withAuthStudent( withRouter( Register ) );

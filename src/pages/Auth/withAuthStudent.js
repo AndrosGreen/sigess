@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 const withAuthStudent = (Component) => {
     const AuthRoute = () => {
         const isAuth = JSON.parse( sessionStorage.getItem("usuario") );
-        if(isAuth?.nivelDePermisos === 1){
+        if(isAuth?.nivelDePermisos === 0){
             return <Component />
         }
         else {

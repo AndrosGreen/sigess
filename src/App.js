@@ -8,6 +8,7 @@ import ManageUsers from './pages/ManageUsers';
 import NotFoundPage from './pages/NotFoundPage';
 import Register from './pages/Register';
 import ValidateRequirements from './pages/ValidateRequirements';
+import ViewRequisitesStudent from './pages/ViewRequisitesStudent';
 
 class Main extends React.Component {
     render(){
@@ -35,7 +36,8 @@ class App extends React.Component {
                             <Route path="/gestionar/requisitos" exact component={ManageRequisites} />
                             <Route path="/login" exact component={LogIn} />
                             <Route path="/validar/requisitos" exact component={ValidateRequirements} />
-                            <Route path="/alumno/registro" exact component={Register}/> 
+                            <Route path="/alumno/registro" exact component={Register}/>
+                            <Route path="/alumno/requisitos" exact component={ViewRequisitesStudent} /> 
                             <Route path="*" component={NotFoundPage} />
                         </Switch>
                     </div>
