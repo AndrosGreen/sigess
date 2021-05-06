@@ -67,8 +67,10 @@ def validarRequisitosAlumno(requisitoAlumnos):
     sql = ""
     if requisitoAlumnos.cumple == "A":
         sql = "update alumnosrequisitos set cumple='A' where noControl=%s and idRequisito=%s"
-    else:
+    elif requisitoAlumnos.cumple == "R":
         sql = "update alumnosrequisitos set cumple='R' where noControl=%s and idRequisito=%s"
+    else:
+        sql = "update alumnosrequisitos set cumple='P' where noControl=%s and idRequisito=%s"
     data = (requisitoAlumnos.Alumno, requisitoAlumnos.Requisito)
     executeStatement(sql, data)
 
