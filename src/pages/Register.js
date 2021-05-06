@@ -30,6 +30,10 @@ class Register extends React.Component {
 
     }
 
+    /**
+     * Valida los campos del form.
+     * @returns {boolean} - verdadero si estan validados correctamente, falso en caso contrario.
+     */
     validate = () => {
         let noControlError = "";
         let nombreError = "";
@@ -120,6 +124,9 @@ class Register extends React.Component {
         return true;
     };
 
+    /**
+     * Intenta registrar al alumno.
+     */
     handleAddPreRequisite = () => {
         if( this.validate() ){
             this.addPreRequisite(this.state.noControl, this.state.nombre, this.state.apPaterno,
@@ -156,10 +163,13 @@ class Register extends React.Component {
     render(){
         return (
             <div>
-                Registo
+                <h2 style={{textAlign : "center"}}>Registro</h2>
+                
                 <form onSubmit={event => event.preventDefault()}>
                             <div className="form-group">
-                                <label>Número Control: *</label>
+                                <label>
+                                    Número Control: <label style={{color : "red"}}>*</label> 
+                                </label>
                                 <input 
                                     className="form-control"
                                     value = {this.state.noControl}
@@ -168,7 +178,7 @@ class Register extends React.Component {
                                 <p style={{color: "red"}}>{this.state.noControlError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Nombre : *</label>
+                                <label>Nombre : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
                                     value = {this.state.nombre}
@@ -177,7 +187,7 @@ class Register extends React.Component {
                                 <p style={{color: "red"}}>{this.state.nombreError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Apellido Paterno : *</label>
+                                <label>Apellido Paterno : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
                                     value = {this.state.apPaterno}
@@ -186,40 +196,36 @@ class Register extends React.Component {
                                 <p style={{color: "red"}}>{this.state.apPaternoError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Apellido Materno : *</label>
+                                <label>Apellido Materno : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.apMaterno}
                                     onChange = { e => this.setState({apMaterno : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.apMaternoError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Correo : *</label>
+                                <label>Correo : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.gmail}
                                     onChange = { e => this.setState({gmail : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.gmailError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Clave : * </label>
+                                <label>Clave : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.clave}
                                     onChange = { e => this.setState({clave : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.claveError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Telefono : </label>
+                                <label>Telefono (10 digitos) : </label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.telefono}
                                     onChange = { e => this.setState({telefono : e.target.value}) }
                                 />
@@ -228,7 +234,7 @@ class Register extends React.Component {
                             
                             <div className="form-group">
                                 <label>
-                                    Carrera : *
+                                    Carrera : <label style={{color : "red"}}>*</label>
                                 </label>
                                 <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -243,42 +249,47 @@ class Register extends React.Component {
                                     <li><a class="dropdown-item" onClick={() => this.setState({carrera : "Ing. Industrial"})}>Ing. Industrial</a></li>
                                 </ul>
                                 </div>
+                                <p style={{color: "red"}}>{this.state.carreraError}</p>
                             </div>
                             
                             <div className="form-group">
-                                <label>Programa : *</label>
+                                <label>Programa : <label style={{color : "red"}}>*</label></label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.programa}
                                     onChange = { e => this.setState({programa : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.programaError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Nombre del encargado : * </label>
+                                <label>Nombre del encargado : <label style={{color : "red"}}>*</label> </label>
                                 <input 
                                     className="form-control"
-                                    type = "password"
                                     value = {this.state.encargado}
                                     onChange = { e => this.setState({encargado : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.encargadoError}</p>
                             </div>
                             <div className="form-group">
-                                <label>Nombre Institucion : * </label>
+                                <label>Nombre Institucion : <label style={{color : "red"}}>*</label> </label>
                                 <input 
-                                    className="form-control"
-                                    type = "password"
+                                    className="form-control"                                
                                     value = {this.state.institucion}
                                     onChange = { e => this.setState({institucion : e.target.value}) }
                                 />
                                 <p style={{color: "red"}}>{this.state.institucionError}</p>
                             </div>
-                            <div className="form-group">
-                                <button type="button" className="btn btn-primary" >Agregar</button>
-                                <button type="button" className="btn btn-danger" onClick={this.handleAddPreRequisite}>Cancelar</button>
-                            </div>
+                            
+                            <button 
+                                type="button" 
+                                className="btn btn-primary btn-block" 
+                                style={{marginBottom : "10px"}}
+                                onClick = {this.handleAddPreRequisite}
+                            >
+                                Registrarme
+                            </button>
+                            
+
 
 
                 </form>
