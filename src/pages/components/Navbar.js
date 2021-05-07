@@ -59,7 +59,7 @@ class Navbar extends React.Component {
                         <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "#198b34"}}>
                             <div className="container-fluid">
                                 
-                                <Link className="navbar-brand" to="/"> SiGeSS</Link>
+                                <Link className="navbar-brand" to="/validar/requisitos"> SiGeSS</Link>
                                 
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
