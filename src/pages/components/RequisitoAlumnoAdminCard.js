@@ -14,8 +14,19 @@ class RequisitoAlumnoAdminCard extends React.Component {
                         <div style={{marginBottom : "1rem"}}>
                             <h5 className="card-subtitle mb-2 text-muted">{this.props.noControl}</h5>
                         </div>
-                        <button className="btn btn-success" style={{marginRight : "10px"}}>Aceptar</button>
-                        <button className="btn btn-danger" >Rechazar</button>
+                        <button 
+                            className="btn btn-success" 
+                            style={{marginRight : "10px"}}
+                            onClick={()=> this.props.handleOpenAcept( this.props.nombre, this.props.noControl) }
+                        >
+                            Aceptar
+                        </button>
+                        <button 
+                            className="btn btn-danger" 
+                            onClick={() => this.props.handleOpenReject(this.props.nombre, this.props.noControl) }
+                        >
+                            Rechazar
+                        </button>
                     </div>
                     </div>
                 </div> 

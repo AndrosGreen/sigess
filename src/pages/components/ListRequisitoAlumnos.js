@@ -11,6 +11,8 @@ class ListRequisitoAlumnos extends React.Component {
                         nombre = {alumno.nombre}
                         noControl = {alumno.noControl}
                         estatus = {alumno.estatus}
+                        handleOpenAcept ={this.props.handleOpenAcept}
+                        handleOpenReject = {this.props.handleOpenReject}
                     />
                 );
             }
