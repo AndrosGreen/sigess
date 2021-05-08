@@ -108,3 +108,14 @@ def obtenerRequisitosTodos():
     """"Obtiene la lista de todos los requistos ingresados"""
     requirements = ControladorRequisitos.listaRequisitos()
     return jsonify(requirements)
+
+
+@app.route('/requisitos/admin', methods=['GET'])
+@login_required
+@admin_required
+def obtenerRequsitosAdmin():
+    """Obtiene la lista de los alumnos y el estado del requisto relacionado con el administrador"""
+    _json = request.json
+    _idAdmin = _json['idAdmin']
+    requirements = ControladorRequisitos.listaRequisitosAdmin(_idAdmin)
+    return jsonify(requirements)
