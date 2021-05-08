@@ -91,3 +91,14 @@ def listaRequisitosAdmin(idAdmin):
     sql += " al_req.idRequisito=req.idRequisito join alumnos al on al.noControl=al_req.noControl where adm.idadmin=%s"
     rows = executeQueryWithData(sql, idAdmin)
     return rows
+
+# Recibe un id del administrador y devuelve el requisito serializado
+def obtenerRequisitoAdmin(idAdmin):
+    try:
+        rows = executeQuery("select * from requisitos where revisadoPor = '{0}'".format(idAdmin))
+        if len(rows) == 0:
+            return None
+        row = rows[0]
+        return Requisito(row['idRequisito'], row['nombre'], row['revisadoPor'], row['detalleARevisar'])
+    except Exception as error:
+        raise error
