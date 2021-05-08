@@ -108,3 +108,34 @@ def obtenerRequisitosTodos():
     """"Obtiene la lista de todos los requistos ingresados"""
     requirements = ControladorRequisitos.listaRequisitos()
     return jsonify(requirements)
+
+
+@app.route('/requisitos/alumnosAdmin', methods=['GET'])
+@login_required
+@admin_required
+def obtenerAlumnosRevisor():
+    """Obtiene la lista de los alumnos y el estado del requisto relacionado con el administrador"""
+    _json = request.json
+    _idAdmin = _json['idAdmin']
+    requirements = ControladorRequisitos.listaRequisitosAdmin(_idAdmin)
+    return jsonify(requirements)
+
+@app.route('/requisitos/requisitoAdmin', methods=['GET'])
+@login_required
+@admin_required
+def obtenerRequisitoRevisor():
+    """Obtiene el requisito relacionado con el administrador"""
+    _json = request.json
+    _idAdmin = _json['idAdmin']
+    ControladorRequisitos.obtenerRequisitoAdmin(_idAdmin)
+    requirement = ControladorRequisitos.obtenerRequisitoAdmin(_idAdmin)
+    if requirement is None:
+        resp = {
+            'requisito': ""
+        }
+        return resp
+    else:
+        resp = {
+            'requisito': requirement.serialize
+        }
+        return resp

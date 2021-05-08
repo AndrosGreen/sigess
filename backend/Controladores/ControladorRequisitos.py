@@ -1,7 +1,6 @@
 from sigess.db import executeStatement, executeQueryWithData, executeQuery
 from Modelos.Requisito import Requisito
 
-
 # Recibe un requisito y lo crea
 def crearRequisito(requisito):
     try:
@@ -83,3 +82,23 @@ def listaRequisitos():
     for row in rows:
         requeriments.append(Requisito.desdeFila(row).serialize)
     return requeriments
+
+# Devuelve todos los requistos de administrador
+def listaRequisitosAdmin(idAdmin):
+    """Obtiene la lista de alumnos con el estatus del requisito relacionados con el administrador"""
+    sql = "select concat(al.nombre,' ',al.apPaterno, ' ', al.apMaterno) as nombre,al.noControl, al_req.cumple as estadoRequisito"
+    sql += " from admins adm join requisitos req on adm.idAdmin=req.revisadoPor join alumnosrequisitos al_req on"
+    sql += " al_req.idRequisito=req.idRequisito join alumnos al on al.noControl=al_req.noControl where adm.idadmin=%s"
+    rows = executeQueryWithData(sql, idAdmin)
+    return rows
+
+# Recibe un id del administrador y devuelve el requisito serializado
+def obtenerRequisitoAdmin(idAdmin):
+    try:
+        rows = executeQuery("select * from requisitos where revisadoPor = '{0}'".format(idAdmin))
+        if len(rows) == 0:
+            return None
+        row = rows[0]
+        return Requisito(row['idRequisito'], row['nombre'], row['revisadoPor'], row['detalleARevisar'])
+    except Exception as error:
+        raise error
