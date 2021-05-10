@@ -1,13 +1,14 @@
 import React from 'react';
 import withAuthAdmin from './Auth/withAuthAdmin';
-import ListRequisitoAlumnos from './components/ListRequisitoAlumnos';
+import ListValidate from './components/ListValidate';
 import ModalAceptRequisite from './modals/ModalAceptRequisite';
 import ModalRejectRequisite from './modals/ModalRejectRequisite';
+import sigess from './api/sigess';
 
 class ValidateRequirements extends React.Component {
 
     state = {
-        alumnos : [
+        alumnosPendientes : [
             {
                 nombre : "Luis Andres Gutierrez Calderon",
                 noControl : "18120184",
@@ -24,10 +25,51 @@ class ValidateRequirements extends React.Component {
                 estatus : "P"
             }
         ],
+
+        alumnosRevisados : [
+            {
+                nombre : "Barry Allen",
+                noControl : "18120199",
+                estatus : "A"
+            },
+            {
+                nombre : "Clark Kent",
+                noControl : "18120000",
+                estatus : "R"
+            }
+        ],
+
         showAcept : false,
         showReject : false,
         noControl : "",
-        nombre : ""
+        nombre : "",
+    
+        // Requisito a validar
+        idRequisito : 0,
+        nombreRequisito : "",
+        detalle : ""
+    }
+
+    componentDidMount (){
+        this.getRequisite();
+    }
+
+    getRequisite = async () => {
+        let user = JSON.parse( sessionStorage.getItem("usuario") );
+        const response = await sigess.post('/requisitos/requisitoAdmin',{
+            idAdmin : user.usuario
+        });
+        
+        console.log(response);
+        
+        //let requisito = response.data.requisito;
+        /*
+        this.setState( {
+            idRequisito : requisito.idRequisito,
+            nombreRequisito : requisito.nombre,
+            detalle : requisito.detalleARevisar
+        } );
+        */
     }
 
     /**
@@ -86,9 +128,23 @@ class ValidateRequirements extends React.Component {
     render(){
         return ( 
             <div>
+                
+                <div style={{ marginBottom : "10px"}}>
+                    <h2> {this.state.nombreRequisito} </h2>
+                </div>
 
-                <ListRequisitoAlumnos 
-                    alumnos={this.state.alumnos} 
+                <h3 style={{marginBottom : "2rem"}}>Pendiente de revisión</h3>
+
+                <ListValidate 
+                    alumnos={this.state.alumnosPendientes} 
+                    handleOpenAcept={this.handleOpenAcept}
+                    handleOpenReject={this.handleOpenReject}
+                />
+
+                <h3 style={{marginBottom : "2rem", marginTop : "2rem"}}>Revisados</h3>
+
+                <ListValidate 
+                    alumnos={this.state.alumnosRevisados} 
                     handleOpenAcept={this.handleOpenAcept}
                     handleOpenReject={this.handleOpenReject}
                 />
