@@ -1,24 +1,24 @@
 import React from 'react';
-import RequisitoAlumnoAdminCard from './RequisitoAlumnoAdminCard';
+import RequisitoAlumnoCard from './RequisitoAlumnoCard';
 
 class ListRequisitoAlumnos extends React.Component {
     render(){
 
-        const cards = this.props.alumnos.map(
-            (alumno) => {
+        const requisites = this.props.requisites.map(
+            requisite => {
                 return (
-                    <RequisitoAlumnoAdminCard
-                        nombre = {alumno.nombre}
-                        noControl = {alumno.noControl}
-                        estatus = {alumno.estatus}
-                        handleOpenAcept ={this.props.handleOpenAcept}
-                        handleOpenReject = {this.props.handleOpenReject}
+                    <RequisitoAlumnoCard
+                        requisiteName = {requisite.requisiteName}
+                        description = {requisite.description}
+                        status = {requisite.status}
                     />
                 );
             }
         );
 
-        return <div>{cards}</div> ;
+        return (
+            <div> {requisites} </div>
+        );
     }
 }
 
