@@ -59,7 +59,6 @@ def obtenerRequisito():
 
 @app.route('/requisitos/estatusAlumno', methods=['POST'])
 @login_required
-# @alumno_required
 def obtenerRequistosAlumno():
     """"Obtiene la lista de requisitos del alumno"""
     _json = request.json
@@ -70,7 +69,6 @@ def obtenerRequistosAlumno():
 
 @app.route('/requisitos/validarRequisitos', methods=['POST'])
 @login_required
-@admin_required
 def validarRequisitos():
     """"Valida los requisitos dados a los alumnos"""
     json = request.json
@@ -88,7 +86,6 @@ def validarRequisitos():
 
 @app.route('/requisitos/actualizaRequisito', methods=['POST'])
 @login_required
-@admin_required
 def actualizarRequisito():
     """"Valida los requisitos dados a los alumnos"""
     json = request.json
@@ -112,7 +109,6 @@ def obtenerRequisitosTodos():
 
 @app.route('/requisitos/alumnosAdmin', methods=['POST'])
 @login_required
-@admin_required
 def obtenerAlumnosRevisor():
     """Obtiene la lista de los alumnos y el estado del requisto relacionado con el administrador"""
     _json = request.json
@@ -122,7 +118,6 @@ def obtenerAlumnosRevisor():
 
 @app.route('/requisitos/requisitoAdmin', methods=['POST'])
 @login_required
-@admin_required
 def obtenerRequisitoRevisor():
     """Obtiene el requisito relacionado con el administrador"""
     _json = request.json
