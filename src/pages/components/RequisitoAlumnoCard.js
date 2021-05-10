@@ -2,29 +2,43 @@ import React from 'react';
 
 class RequisitoAlumnoCard extends React.Component {
     state = {
-        status : ''
+        status : '',
+        tipoBoton : ''
     }
 
     colorStatus(){
-        if(this.props.status == 'R'){
-            return this.state.status = "Rechazado";
+        if(this.props.status === 'R'){
+            return "Rechazado";
         }
-        else if(this.props.status == 'A'){
-            return this.state.status = "Aceptado";
+        else if(this.props.status === 'A'){
+            return "Aceptado";
         }
         else{
-            return this.state.status = "Pendiente";
+            return "Pendiente";
         }
     }
 
+    tipoBoton(){
+        if(this.props.status === 'R'){
+            return "btn btn-danger";
+        }
+        else if(this.props.status === 'A'){
+            return "btn btn-success";
+        }
+        else{
+            return "btn btn-warning";
+        }
+    }
     render(){
+
+
         return(
             <div className = "card" style={{ width : "40rem" , marginTop : "10px" }}>
                 <div className="card-body">
                     <h5 className="card-title"> {this.props.requisiteName} </h5>
                     <h6 class="card-subtitle mb-2 text-muted">Estatus : </h6>
                     <button 
-                        className="btn btn-secondary" style={{margin : "10px"}}
+                        className={this.tipoBoton()} style={{margin : "10px"}}
                     > 
                         {this.colorStatus()}
                     </button>
