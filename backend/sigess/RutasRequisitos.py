@@ -57,7 +57,7 @@ def obtenerRequisito():
     return resp
 
 
-@app.route('/requisitos/estatusAlumno', methods=['GET'])
+@app.route('/requisitos/estatusAlumno', methods=['POST'])
 @login_required
 # @alumno_required
 def obtenerRequistosAlumno():
@@ -110,7 +110,7 @@ def obtenerRequisitosTodos():
     return jsonify(requirements)
 
 
-@app.route('/requisitos/alumnosAdmin', methods=['GET'])
+@app.route('/requisitos/alumnosAdmin', methods=['POST'])
 @login_required
 @admin_required
 def obtenerAlumnosRevisor():
@@ -120,7 +120,7 @@ def obtenerAlumnosRevisor():
     requirements = ControladorRequisitos.listaRequisitosAdmin(_idAdmin)
     return jsonify(requirements)
 
-@app.route('/requisitos/requisitoAdmin', methods=['GET'])
+@app.route('/requisitos/requisitoAdmin', methods=['POST'])
 @login_required
 @admin_required
 def obtenerRequisitoRevisor():
