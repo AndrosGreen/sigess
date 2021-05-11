@@ -1,18 +1,22 @@
 class Alumno:
-    def __init__(self, noControl, nombre, apPaterno, apMaterno, correo, clave, carrera, programa, encargado, empresa):
+    def __init__(self, noControl, nombre, apPaterno,
+                 apMaterno, correo, clave, telefono,
+                 carrera, programa, encargado, institucion):
         self.noControl = noControl
         self.nombre = nombre
         self.apPaterno = apPaterno
         self.apMaterno = apMaterno
         self.correo = correo
         self.clave = clave
+        self.telefono = telefono
         self.carrera = carrera
         self.programa = programa
         self.encargado = encargado
-        self.empresa = empresa
+        self.institucion = institucion
 
     @classmethod
     def desdeFila(cls, fila):
+        print(fila)
         return cls(
             fila['noControl'],
             fila['nombre'],
@@ -20,11 +24,13 @@ class Alumno:
             fila['apMaterno'],
             fila['correo'],
             fila['clave'],
+            fila['telefono'],
             fila['carrera'],
             fila['programa'],
             fila['encargado'],
-            fila['empresa']
+            fila['institucion']
         )
+
     @property
     def serialize(self):
         return {
@@ -37,5 +43,5 @@ class Alumno:
             'carrera': self.carrera,
             'programa': self.programa,
             'encargado': self.encargado,
-            'empresa': self.empresa,
+            'institucion': self.institucion,
         }
