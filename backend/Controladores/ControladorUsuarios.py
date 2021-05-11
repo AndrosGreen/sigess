@@ -40,7 +40,14 @@ def logout():
 
 def obtenerUsuarioPorID(idUsuario):
 	"""Obtiene el usaurio dado un ID"""
-	# Prueba con alumnos
+	# Prueba con alumnos del preregistro
+	sql = f"select * from alumnospreregistro where noControl=%s"
+	data = idUsuario
+	rows = executeQueryWithData(sql, data)
+	if len(rows) == 1:
+		row = rows[0]
+		return Usuario.alumnoDedeFila(row)
+	# Prueba con alumnos registrados
 	sql = f"select * from alumnos where noControl=%s"
 	data = idUsuario
 	rows = executeQueryWithData(sql, data)
