@@ -8,42 +8,15 @@ import sigess from './api/sigess';
 class ValidateRequirements extends React.Component {
 
     state = {
-        alumnosPendientes : [
-            {
-                nombre : "Luis Andres Gutierrez Calderon",
-                noControl : "18120184",
-                estatus : "P"
-            },
-            {
-                nombre : "Jocelyn Alexia Aguilera Martinez",
-                noControl : "18120207",
-                estatus : "P"
-            },
-            {
-                nombre : "Bruce Wayne",
-                noControl : "18120100",
-                estatus : "P"
-            }
-        ],
-
-        alumnosRevisados : [
-            {
-                nombre : "Barry Allen",
-                noControl : "18120199",
-                estatus : "A"
-            },
-            {
-                nombre : "Clark Kent",
-                noControl : "18120000",
-                estatus : "R"
-            }
-        ],
-
+        alumnosPendientes : [],
+        alumnosRevisados : [],
         showAcept : false,
         showReject : false,
         noControl : "",
         nombre : "",
-    
+        
+        idAdmin : 0,
+
         // Requisito a validar
         idRequisito : 0,
         nombreRequisito : "",
@@ -52,37 +25,63 @@ class ValidateRequirements extends React.Component {
 
     componentDidMount (){
         this.getRequisite();
+        this.getStudents();
     }
 
+    /**
+     * Obtiene el requisito relacionado con el admin logueado.
+     */
     getRequisite = async () => {
         let user = JSON.parse( sessionStorage.getItem("usuario") );
         const response = await sigess.post('/requisitos/requisitoAdmin',{
             idAdmin : user.usuario
         });
         
-        console.log(response);
-        
-        //let requisito = response.data.requisito;
-        /*
+        let requisito = response.data.requisito;
+
         this.setState( {
             idRequisito : requisito.idRequisito,
             nombreRequisito : requisito.nombre,
             detalle : requisito.detalleARevisar
         } );
-        */
-    }
-
-    /**
-     * Obtiene los alumnos que ya fueron revisados
-     */
-    getReviwed = () => {
         
     }
 
     /**
-     * Obtiene los alumnos que no han sido revisados
+     * Obtiene los estudiantes relacionados al requisito.
      */
-    getNonReviewed = () => {
+    getStudents = async () => {
+        let user = JSON.parse( sessionStorage.getItem("usuario") );
+        let id = user.usuario;
+        
+        const response = await sigess.post('/requisitos/alumnosAdmin',{
+            idAdmin : id
+        });
+        
+        let arrStudents = response.data;
+        let reviwed = [];
+        let nonReviwed = [];
+        arrStudents.forEach( student => {
+            if( student.estadoRequisito === 'P'){
+                nonReviwed.push( {
+                    nombre : student.nombre,
+                    noControl : student.noControl,
+                    estatus : student.estadoRequisito
+                } );
+            }
+            else {
+                reviwed.push( {
+                    nombre : student.nombre,
+                    noControl : student.noControl,
+                    estatus : student.estadoRequisito
+                } );
+            }
+        });
+
+        this.setState( { 
+            alumnosPendientes : nonReviwed,
+            alumnosRevisados : reviwed
+        } );
 
     }
 
@@ -107,22 +106,51 @@ class ValidateRequirements extends React.Component {
     handleOpenReject = (name, noControl) => {
         this.setState(  { showReject : true , nombre : name, noControl : noControl} );
     }
+    /**
+     * Cierra el modal
+     */
     handleCloseReject = () => {this.setState( { showReject : false} );}
 
     /**
      * Acepta el requisito para el estudiante
-     * @param {*} noControl 
+     * @param {int} noControl - numero de control del alumno 
      */
     aceptStudent = async (noControl) => {
-        console.log("validar");
+        const response = await sigess.post("/requisitos/validarRequisitos",[{
+            Requisito: this.state.idRequisito, 
+            Alumno: noControl,
+            cumple: "A"
+        }] );
+        this.getStudents();
+        this.handleCloseAcept();
     }
 
     /**
      * Rechaza el requisito para el estudiante.
-     * @param {*} noControl 
+     * @param {int} noControl - numero de control del alumno 
      */
     rejectStudent = async (noControl) => {
-        console.log("rechazar");
+        const response = await sigess.post("/requisitos/validarRequisitos",[{
+            Requisito: this.state.idRequisito, 
+            Alumno: noControl,
+            cumple: "R"
+        }] );
+        this.getStudents();
+        this.handleCloseAcept();
+        this.handleCloseReject();
+    }
+
+    /**
+     * Rectifica un alumno.
+     * @param {int} noControl - numero de control del alumno 
+     */
+    undoStudent = async (noControl) => {
+        const response = await sigess.post("/requisitos/validarRequisitos",[{
+            Requisito: this.state.idRequisito, 
+            Alumno: noControl,
+            cumple: "P"
+        }] );
+        this.getStudents();
     }
 
     render(){
@@ -130,7 +158,8 @@ class ValidateRequirements extends React.Component {
             <div>
                 
                 <div style={{ marginBottom : "10px"}}>
-                    <h2> {this.state.nombreRequisito} </h2>
+                    <h2 style={{marginBottom : "1rem"}}> {this.state.nombreRequisito} </h2>
+                    <p> {this.state.detalle} </p>
                 </div>
 
                 <h3 style={{marginBottom : "2rem"}}>Pendiente de revisión</h3>
@@ -139,6 +168,7 @@ class ValidateRequirements extends React.Component {
                     alumnos={this.state.alumnosPendientes} 
                     handleOpenAcept={this.handleOpenAcept}
                     handleOpenReject={this.handleOpenReject}
+                    undoStudent = {this.undoStudent}
                 />
 
                 <h3 style={{marginBottom : "2rem", marginTop : "2rem"}}>Revisados</h3>
@@ -147,6 +177,7 @@ class ValidateRequirements extends React.Component {
                     alumnos={this.state.alumnosRevisados} 
                     handleOpenAcept={this.handleOpenAcept}
                     handleOpenReject={this.handleOpenReject}
+                    undoStudent = {this.undoStudent}
                 />
 
                 <ModalAceptRequisite

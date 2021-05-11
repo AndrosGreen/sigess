@@ -62,7 +62,13 @@ class RequisitoAlumnoAdminCard extends React.Component {
                             <h5 className="card-subtitle mb-2 text-muted">{this.props.noControl}</h5>
                         </div>
 
-                        <button className="btn btn-primary" style={{marginRight : "10px"}}>Rectificar</button>
+                        <button 
+                            className="btn btn-primary" 
+                            style={{marginRight : "10px"}}
+                            onClick={() => this.props.undoStudent( this.props.noControl ) }
+                        >
+                            Rectificar
+                        </button>
                     </div>
                     </div>
                 </div> 

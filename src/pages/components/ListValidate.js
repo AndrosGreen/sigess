@@ -13,6 +13,7 @@ class ListValidate extends React.Component {
                         estatus = {alumno.estatus}
                         handleOpenAcept ={this.props.handleOpenAcept}
                         handleOpenReject = {this.props.handleOpenReject}
+                        undoStudent = {this.props.undoStudent}
                     />
                 );
             }
