@@ -20,7 +20,8 @@ def creaAlumno(alumno):
     sql = "insert into alumnos values(%s, %s, %s, %s, %s, md5(%s), %s, %s, %s, %s, %s)"
     data = (alumno.noControl, alumno.nombre, alumno.apPaterno,
             alumno.apMaterno, alumno.correo, alumno.clave,
-            alumno.carrera, alumno.programa, alumno.encargado, alumno.empresa)
+            alumno.telefono, alumno.carrera, alumno.programa,
+            alumno.encargado, alumno.institucion)
     executeStatement(sql, data)
     return obtenAlumnoPorNombre(alumno.nombre)
 
@@ -39,16 +40,16 @@ def modificaAlumno(alumno):
           'carrera=%s, programa=%s, encargado=%s, institucion=%s where noControl=%s'
     data = (alumno.nombre, alumno.apPaterno, alumno.apMaterno,
             alumno.correo, alumno.clave, alumno.carrera, alumno.programa,
-            alumno.encargado, alumno.empresa, alumno.noControl)
+            alumno.encargado, alumno.institucion, alumno.noControl)
     executeStatement(sql, data)
 
 
 def registraAlumno(alumno):
-    """Checa si un alumno está preregistrado y si es así lo registra, sino regresa None"""
-    if existeAlumnoAPreRegistrar(alumno):
-        creaAlumno(alumno)
-    else:
-        return None
+    """Registra al alumno, lo borra del preregistro y agrega sus requisitos"""
+    eliminaPreRegistrado(alumno.noControl)
+    creaAlumno(alumno)
+    agregaRequisitosAlumno(alumno)
+    return obtenAlumnoPorNombre(alumno.nombre)
 
 
 def listaAlumnos():
@@ -56,19 +57,20 @@ def listaAlumnos():
     return rows  
 
 
-def existeAlumnoAPreRegistrar(alumno):
-    """Consulta si existe el alumno a preregistrar en el pre registro o en los registros"""
-    sql = 'select * from alumnospreregistro where noControl=%s'
-    data = alumno.noControl
-    filas = executeQueryWithData(sql, data)
-    if len(filas) > 0:
-        return True  # Si el alumno está en pre registro
+def existeAlumnoRegistrado(alumno):
+    """Consulta si existe el alumno a preregistrar en el pre registro"""
     sql = 'select * from alumnos where noControl=%s'
     data = alumno.noControl
     filas = executeQueryWithData(sql, data)
-    if len(filas) > 0:
-        return True  # Si el alumno ya se registró
-    return False  # El alumno no existe
+    return len(filas) > 0
+
+
+def existeAlumnoAPreRegistrar(alumno):
+    """Consulta si existe el alumno a preregistrar en el pre registro"""
+    sql = 'select * from alumnospreregistro where noControl=%s'
+    data = alumno.noControl
+    filas = executeQueryWithData(sql, data)
+    return len(filas) > 0
 
 
 def preRegistraAlumno(alumno):
@@ -100,4 +102,11 @@ def estaAlumnoPreRegistrado(noControl):
 def eliminaPreRegistrado(noControl):
     sql = "delete from alumnospreregistro where noControl=%s"
     data = noControl
+    executeStatement(sql, data)
+
+
+def agregaRequisitosAlumno(alumno):
+    """Agrega los requisitos de un alumno a registrar"""
+    sql = "insert into alumnosRequisitos (select %s, idRequisito, 'P' from requisitos)"
+    data = alumno.noControl
     executeStatement(sql, data)
