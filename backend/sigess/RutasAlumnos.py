@@ -2,9 +2,10 @@ from flask import request, jsonify
 from flask_login import login_required
 
 from Controladores import ControladorAlumnos
+from Modelos.Alumno import Alumno
 from Modelos.AlumnoPreRegistro import AlumnoPreRegistro
 from sigess import app
-from sigess.utils import admin_required
+from sigess.utils import admin_required, alumno_required
 
 
 @app.route('/alumnos/preRegistraAlumno', methods=['POST'])
@@ -52,3 +53,28 @@ def eliminaPreRegistrado():
     return{
         "mensaje": "Alumno eliminado del preregistro exitosamente"
     }
+
+
+@app.route("/alumnos/registraAlumno", methods=["POST"])
+@login_required
+@alumno_required
+def registraAlumno():
+    """Registra un alumno si existe en pre registro"""
+    json = request.json
+    alumno = Alumno.desdeFila(json)
+    respuesta = jsonify("")
+    if ControladorAlumnos.existeAlumnoAPreRegistrar(alumno):
+        alumno = ControladorAlumnos.registraAlumno(alumno)
+        respuesta = jsonify({
+            "mensaje": "Alumno registrado exitosamente",
+            "Alumno": alumno.serialize
+        })
+    elif ControladorAlumnos.existeAlumnoRegistrado(alumno):
+        respuesta = jsonify({
+            "mensaje": "El alumno ya se registró previamente"
+        })
+    else:
+        respuesta = jsonify({
+            "mensaje": "El alumno no se encuentra en el preregistro"
+        })
+    return respuesta
