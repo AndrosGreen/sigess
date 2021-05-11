@@ -93,7 +93,10 @@ def eliminaAdminPorID(admin):
 
 
 def obtenerAdminsSinRequisito():
-    sql = "select a.* from admins a left join requisitos r on a.idAdmin = r.revisadoPor where r.idRequisito is null;"
+    sql = "select a.* from admins a " \
+          "left join requisitos r on a.idAdmin = r.revisadoPor " \
+          "where r.idRequisito is null " \
+          "and a.esRevisor='T';"
     admins = []
     filas = executeQuery(sql)
     for fila in filas:
