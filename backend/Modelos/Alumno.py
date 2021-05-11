@@ -16,7 +16,6 @@ class Alumno:
 
     @classmethod
     def desdeFila(cls, fila):
-        print(fila)
         return cls(
             fila['noControl'],
             fila['nombre'],

@@ -9,7 +9,6 @@ class Admin:
 
     @classmethod
     def desdeFila(cls, fila):
-        print(fila)
         return cls(
             fila['idAdmin'],
             fila['nombre'],

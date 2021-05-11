@@ -26,7 +26,6 @@ def desautoriza():
 def verifica():
     """Devuelve los datos mínimos del usuario logeado"""
     usuarioActual = current_user
-    print(usuarioActual.nivelDePermisos)
     return jsonify({
         'Usuario': usuarioActual.serialize
     })
