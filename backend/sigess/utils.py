@@ -38,7 +38,7 @@ def alumno_required(func):
 
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        if not current_user.nivelDePermisos == 1:
+        if not current_user.nivelDePermisos == 1 and not current_user.nivelDePermisos == 0:
             return {
                 'mensaje': 'No tiene permiso de alumno'
             }
