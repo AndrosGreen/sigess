@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Navbar from './pages/components/Navbar';
+import GestionarAsignaciones from './pages/GestionarAsignaciones';
 import LogIn from './pages/LogIn';
 import MainStudent from './pages/MainStudent';
 import ManageRequisites from './pages/ManageRequisites';
@@ -34,6 +35,7 @@ class App extends React.Component {
                             <Route path="/main/alumno" exact component={MainStudent} />
                             <Route path="/gestionar/usuarios" exact component={ManageUsers} />
                             <Route path="/gestionar/requisitos" exact component={ManageRequisites} />
+                            <Route path="/gestionar/tareas" exact component={GestionarAsignaciones}/>
                             <Route path="/login" exact component={LogIn} />
                             <Route path="/validar/requisitos" exact component={ValidateRequirements} />
                             <Route path="/alumno/registro" exact component={Register}/>
