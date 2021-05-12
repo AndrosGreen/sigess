@@ -106,7 +106,7 @@ class Navbar extends React.Component {
                                             <Link className="nav-link active" to="/alumno/requisitos"> Requisitos </Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link active" to="/main/alumno"> Actividades </Link>
+                                            <Link className="nav-link active" to="/alumno/asignaciones"> Actividades </Link>
                                         </li>         
                                     </ul>
         
