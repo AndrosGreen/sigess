@@ -8,9 +8,9 @@ class ListRequisitoAlumnos extends React.Component {
             requisite => {
                 return (
                     <RequisitoAlumnoCard
-                        requisiteName = {requisite.requisiteName}
-                        description = {requisite.description}
-                        status = {requisite.status}
+                        requisiteName = {requisite.nombre}
+                        description = {requisite.detalleARevisar}
+                        status = {requisite.cumple}
                     />
                 );
             }
