@@ -1,4 +1,5 @@
 import React from 'react';
+import withAuthStudentRegistered from './Auth/withAuthStudentRegistered';
 
 class VistaAsignacionesAlumno extends React.Component {
     render(){
@@ -6,4 +7,4 @@ class VistaAsignacionesAlumno extends React.Component {
     }
 }
 
-export default VistaAsignacionesAlumno;
+export default  withAuthStudentRegistered( VistaAsignacionesAlumno );
