@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import sigess from './api/sigess';
 import withAuthStudent from './Auth/withAuthStudent';
+import ModalRegister from './modals/ModalRegister';
 
 class Register extends React.Component {
 
@@ -27,7 +29,9 @@ class Register extends React.Component {
         carreraError : '',
         programaError : '',
         encargadoError : '',
-        institucionError : ''
+        institucionError : '',
+
+        showModal : false
     }
 
     /**
@@ -143,13 +147,33 @@ class Register extends React.Component {
     };
 
     /**
+     * Registra al alumno
+     */
+    registerStudent = async () => {
+        const response = await sigess.post('/alumnos/registraAlumno', {
+            noControl: this.state.noControl,
+            nombre: this.state.nombre,
+            apPaterno : this.state.apPaterno,
+            apMaterno: this.state.apMaterno,
+            correo: this.state.gmail,
+            clave: this.state.clave,
+            telefono: this.state.telefono,
+            carrera: this.state.carrera,
+            programa: this.state.programa,
+            encargado: this.state.encargado,
+            institucion: this.state.institucion
+        });
+        console.log(response);
+    }
+
+    /**
      * Intenta registrar al alumno.
      */
     handleAddPreRequisite = () => {
         if( this.validate() ){
-            this.addPreRequisite(this.state.noControl, this.state.nombre, this.state.apPaterno,
-                                    this.state.apMaterno, this.state.gmail, this.state.clave, this.state.telefono,
-                                    this.state.carrera, this.state.programa, this.state.encargado, this.state.institucion);
+            
+            this.registerStudent();
+
             this.setState({
                 noControl : '',
                 nombre : '',
@@ -175,7 +199,30 @@ class Register extends React.Component {
                 encargadoError : '',
                 institucionError : ''
             });
+            this.handleOpenModal();
         }
+    }
+
+    /**
+     * Abre el modal
+     */
+    handleOpenModal = () => this.setState( {showModal : true} );
+    /**
+     * Cierra el modal
+     */
+    handleCloseModal = () => this.setState( {showModal : false} );
+
+    /**
+     * Redirije al usuario al login.
+     */
+    handleLogOut = async () => {
+        const response = await sigess.get("/usuarios/logout",
+            {}
+        );
+        console.log(response);
+        sessionStorage.removeItem("usuario");
+        this.handleCloseModal();
+        this.props.history.push("/login");
     }
 
     render(){
@@ -308,6 +355,11 @@ class Register extends React.Component {
                             </button>
                 </form>
                 
+                <ModalRegister
+                    show = {this.state.showModal}
+                    handleLogOut = {this.handleLogOut}
+                />
+
             </div>
         );
     }

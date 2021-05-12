@@ -39,6 +39,9 @@ class Navbar extends React.Component {
                                         </li>
                                         <li className="nav-item">
                                             <Link className="nav-link active" to="/gestionar/requisitos"> Gestionar Requisitos </Link>
+                                        </li>
+                                        <li>
+                                            <Link className="nav-link active" to="/gestionar/tareas"> Gestionar Tareas</Link>
                                         </li>         
                                     </ul>
         
