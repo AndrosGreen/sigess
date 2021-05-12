@@ -1,8 +1,23 @@
 import React from 'react';
+import AsignacionAlumnoCard from './AsignacionAlumnoCard';
 
 class ListAsignacionAlumnos extends React.Component {
     render(){
-        return <div>ListAsignacionAlumnos</div>;
+        const assignments = this.props.assignments.map(
+            assignment => {
+                return (
+                    <AsignacionAlumnoCard
+                        assignmentName = {assignment.assignmentName}
+                        fecha = {assignment.fecha}
+                        status = {assignment.status}
+                    />
+                );
+            }
+        );
+
+        return (
+            <div> {assignments} </div>
+        );
     }
 }
 
