@@ -8,16 +8,7 @@ class ViewRequisitesStudent extends React.Component {
     state = { 
         // requisites
         requisites : [
-            {
-                requisiteName : "validar ajedrez",
-                description : "haber concluido todo el curso",
-                status : "A"
-            },
-            {
-                requisiteName : "validar ingles",
-                description : "haber concluido todo el curso",
-                status : "R"
-           }
+           
         ],
         requisiteName : '',
         description : '',
@@ -37,27 +28,19 @@ class ViewRequisitesStudent extends React.Component {
         console.log(noControlAct);
         this.loadRequisites(noControlAct);
     }
-
-    /*AuthRoute = () => {
-        const isAuth = JSON.parse( sessionStorage.getItem("usuario") );
-        if(isAuth.usuario === 0){
-            return <Component />
-        }
-        else {
-            return <Redirect to="/notFound"/>
-        }
-    };*/ 
     
     /**
-     * carga los requisitos de la bd
+     * carga los requisitos del alumno
+     * @param {String} noControl 
      */
+
     loadRequisites = async (noControl) => {
         const respuesta = await sigess.post( '/requisitos/estatusAlumno',{
-                noControl : "S18120183"
+                noControl : noControl
             }
         );
         console.log(respuesta.data);
-        //this.setState( { requisites : respuesta.data } );
+        this.setState( { requisites : respuesta.data } );
     }
 
     render(){
