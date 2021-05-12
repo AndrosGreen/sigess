@@ -57,21 +57,21 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`AsignacionesAlumnos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`AsignacionesAlumnos` (
-  `noControl` CHAR(9) NOT NULL,
-  `idAsignacion` INT NOT NULL,
   `estado` ENUM('P', 'A', 'R') NOT NULL,
   `nota` VARCHAR(255) NULL,
-  PRIMARY KEY (`noControl`, `idAsignacion`),
-  INDEX `fk_ALUMNOS_has_ASIGNACIONES_ASIGNACIONES1_idx` (`idAsignacion` ASC) VISIBLE,
-  INDEX `fk_ALUMNOS_has_ASIGNACIONES_ALUMNOS_idx` (`noControl` ASC) VISIBLE,
-  CONSTRAINT `fk_ALUMNOS_has_ASIGNACIONES_ALUMNOS`
-    FOREIGN KEY (`noControl`)
-    REFERENCES `SIGESS`.`Alumnos` (`noControl`)
+  `Asignaciones_idAsignacion` INT NOT NULL,
+  `Alumnos_noControl` CHAR(9) NOT NULL,
+  PRIMARY KEY (`Asignaciones_idAsignacion`, `Alumnos_noControl`),
+  INDEX `fk_AsignacionesAlumnos_Asignaciones1_idx` (`Asignaciones_idAsignacion` ASC) VISIBLE,
+  INDEX `fk_AsignacionesAlumnos_Alumnos1_idx` (`Alumnos_noControl` ASC) VISIBLE,
+  CONSTRAINT `fk_AsignacionesAlumnos_Asignaciones1`
+    FOREIGN KEY (`Asignaciones_idAsignacion`)
+    REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_ALUMNOS_has_ASIGNACIONES_ASIGNACIONES1`
-    FOREIGN KEY (`idAsignacion`)
-    REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
+  CONSTRAINT `fk_AsignacionesAlumnos_Alumnos1`
+    FOREIGN KEY (`Alumnos_noControl`)
+    REFERENCES `SIGESS`.`Alumnos` (`noControl`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -156,16 +156,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`DocumentosAlumnos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
-  `idDocumento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
-  `documento` LONGTEXT NOT NULL,
-  `AsignacionesAlumnos_noControl` CHAR(9) NOT NULL,
-  `AsignacionesAlumnos_idAsignacion` INT NOT NULL,
-  PRIMARY KEY (`idDocumento`, `AsignacionesAlumnos_noControl`, `AsignacionesAlumnos_idAsignacion`),
-  INDEX `fk_Documentos_AsignacionesAlumnos1_idx` (`AsignacionesAlumnos_noControl` ASC, `AsignacionesAlumnos_idAsignacion` ASC) VISIBLE,
-  CONSTRAINT `fk_Documentos_AsignacionesAlumnos1`
-    FOREIGN KEY (`AsignacionesAlumnos_noControl` , `AsignacionesAlumnos_idAsignacion`)
-    REFERENCES `SIGESS`.`AsignacionesAlumnos` (`noControl` , `idAsignacion`)
+  `documento` LONGTEXT NULL,
+  `AsignacionesAlumnos_Asignaciones_idAsignacion` INT NOT NULL,
+  `AsignacionesAlumnos_Alumnos_noControl` CHAR(9) NOT NULL,
+  PRIMARY KEY (`AsignacionesAlumnos_Asignaciones_idAsignacion`, `AsignacionesAlumnos_Alumnos_noControl`),
+  INDEX `fk_DocumentosAlumnos_AsignacionesAlumnos1_idx` (`AsignacionesAlumnos_Asignaciones_idAsignacion` ASC, `AsignacionesAlumnos_Alumnos_noControl` ASC) VISIBLE,
+  CONSTRAINT `fk_DocumentosAlumnos_AsignacionesAlumnos1`
+    FOREIGN KEY (`AsignacionesAlumnos_Asignaciones_idAsignacion` , `AsignacionesAlumnos_Alumnos_noControl`)
+    REFERENCES `SIGESS`.`AsignacionesAlumnos` (`Asignaciones_idAsignacion` , `Alumnos_noControl`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -177,11 +176,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`DocumentosAdmin` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
-  `idDocumento` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
-  `documento` MEDIUMBLOB NOT NULL,
+  `documento` LONGTEXT NOT NULL,
   `Asignaciones_idAsignacion` INT NOT NULL,
-  PRIMARY KEY (`idDocumento`, `Asignaciones_idAsignacion`),
+  PRIMARY KEY (`Asignaciones_idAsignacion`),
   INDEX `fk_DocumentosAdmin_Asignaciones1_idx` (`Asignaciones_idAsignacion` ASC) VISIBLE,
   CONSTRAINT `fk_DocumentosAdmin_Asignaciones1`
     FOREIGN KEY (`Asignaciones_idAsignacion`)
