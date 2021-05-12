@@ -1,5 +1,4 @@
 import React from 'react';
-import ListAsignacionAlumnos from './ListAsignacionAlumnos';
 
 class AsignacionAlumnoCard extends React.Component {
     state = {
@@ -36,7 +35,7 @@ class AsignacionAlumnoCard extends React.Component {
         return(
             <div className = "card" style={{ width : "40rem" , marginTop : "10px" }}>
                 <div className="card-body">
-                    <h5 className="card-title"> Nombre de la asignacion </h5>
+                    <h5 className="card-title"> {this.props.assignmentName} </h5>
                     <h6 class="card-subtitle mb-2 text-muted">Estatus : </h6>
                     <button 
                         className={this.tipoBoton()} style={{margin : "10px"}}
@@ -44,7 +43,7 @@ class AsignacionAlumnoCard extends React.Component {
                         {this.colorStatus()}
                     </button>
                     <div className="form-group">
-                        <label>Fecha de entrega: <label className="fw-bold"> 05 de diembre de 2021</label> </label>
+                        <label>Fecha de entrega: <label className="fw-bold"> {this.props.fecha}</label> </label>
                     </div>
 
                     <button 

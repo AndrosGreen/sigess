@@ -7,12 +7,22 @@ class VistaAsignacionesAlumno extends React.Component {
     state = { 
         // asignations
         assignments : [
-           
+           {
+               assignmentName : "carta compromiso",
+               fecha : "05 de diciembre de 2021",
+               status : "A",
+
+           }
+           ,{
+               assignmentName : "carta de aceptacion",
+               fecha : "29 de diciembre de 2021",
+               status : "P",
+           }
         ],
         assignmentName : '',
         beginDate : '',
         endDate : '',
-        stage : '',
+        status : '',
         noControl : '',
         porCiento : 87
 
@@ -53,9 +63,6 @@ class VistaAsignacionesAlumno extends React.Component {
                 </div>
                 <ListAsignacionAlumnos
                     assignments = {this.state.assignments}
-                />
-                <AsignacionAlumnoCard
-
                 />
                     
             </div>

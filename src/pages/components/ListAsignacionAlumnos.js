@@ -7,11 +7,8 @@ class ListAsignacionAlumnos extends React.Component {
             assignment => {
                 return (
                     <AsignacionAlumnoCard
-                        asigmentName = {assignment.asigmentName}
-                        beginDate = {assignment.beginDate}
-                        endDate = {assignment.endDate}
-                        stage = {assignment.stage}
-                        noControl = {assignment.noControl}
+                        assignmentName = {assignment.assignmentName}
+                        fecha = {assignment.fecha}
                         status = {assignment.status}
                     />
                 );
