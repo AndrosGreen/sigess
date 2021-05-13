@@ -158,12 +158,13 @@ DROP TABLE IF EXISTS `SIGESS`.`DocumentosAlumnos` ;
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
   `nombre` VARCHAR(45) NOT NULL,
   `documento` LONGTEXT NULL,
-  `AsignacionesAlumnos_Asignaciones_idAsignacion` INT NOT NULL,
-  `AsignacionesAlumnos_Alumnos_noControl` CHAR(9) NOT NULL,
-  PRIMARY KEY (`AsignacionesAlumnos_Asignaciones_idAsignacion`, `AsignacionesAlumnos_Alumnos_noControl`),
-  INDEX `fk_DocumentosAlumnos_AsignacionesAlumnos1_idx` (`AsignacionesAlumnos_Asignaciones_idAsignacion` ASC, `AsignacionesAlumnos_Alumnos_noControl` ASC) VISIBLE,
+  `idDocumentoAlumno` INT NOT NULL AUTO_INCREMENT,
+  `idAsignacion` INT NOT NULL,
+  `noControl` CHAR(9) NOT NULL,
+  PRIMARY KEY (`idDocumentoAlumno`, `idAsignacion`, `noControl`),
+  INDEX `fk_DocumentosAlumnos_AsignacionesAlumnos1_idx` (`idAsignacion` ASC, `noControl` ASC) VISIBLE,
   CONSTRAINT `fk_DocumentosAlumnos_AsignacionesAlumnos1`
-    FOREIGN KEY (`AsignacionesAlumnos_Asignaciones_idAsignacion` , `AsignacionesAlumnos_Alumnos_noControl`)
+    FOREIGN KEY (`idAsignacion` , `noControl`)
     REFERENCES `SIGESS`.`AsignacionesAlumnos` (`Asignaciones_idAsignacion` , `Alumnos_noControl`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -178,11 +179,12 @@ DROP TABLE IF EXISTS `SIGESS`.`DocumentosAdmin` ;
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
   `nombre` VARCHAR(45) NOT NULL,
   `documento` LONGTEXT NOT NULL,
-  `Asignaciones_idAsignacion` INT NOT NULL,
-  PRIMARY KEY (`Asignaciones_idAsignacion`),
-  INDEX `fk_DocumentosAdmin_Asignaciones1_idx` (`Asignaciones_idAsignacion` ASC) VISIBLE,
+  `idDocumentoAdmin` INT NOT NULL AUTO_INCREMENT,
+  `idAsignacion` INT NOT NULL,
+  PRIMARY KEY (`idDocumentoAdmin`, `idAsignacion`),
+  INDEX `fk_DocumentosAdmin_Asignaciones1_idx` (`idAsignacion` ASC) VISIBLE,
   CONSTRAINT `fk_DocumentosAdmin_Asignaciones1`
-    FOREIGN KEY (`Asignaciones_idAsignacion`)
+    FOREIGN KEY (`idAsignacion`)
     REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
