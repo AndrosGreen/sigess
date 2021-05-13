@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`Alumnos` (
   `carrera` VARCHAR(30) NOT NULL,
   `programa` VARCHAR(40) NOT NULL,
   `encargado` VARCHAR(120) NOT NULL,
-  `institucion` VARCHAR(50) NOT NULL,
+  `institucion` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`noControl`))
 ENGINE = InnoDB;
 
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `SIGESS`.`Asignaciones` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`Asignaciones` (
   `idAsignacion` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(20) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
   `inicioRecibos` DATE NOT NULL,
   `finRecibos` DATE NOT NULL,
   `etapa` INT NOT NULL,
@@ -156,7 +156,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`DocumentosAlumnos` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
-  `nombre` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
   `documento` LONGTEXT NULL,
   `idDocumentoAlumno` INT NOT NULL AUTO_INCREMENT,
   `idAsignacion` INT NOT NULL,
@@ -177,7 +177,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SIGESS`.`DocumentosAdmin` ;
 
 CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAdmin` (
-  `nombre` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
   `documento` LONGTEXT NOT NULL,
   `idDocumentoAdmin` INT NOT NULL AUTO_INCREMENT,
   `idAsignacion` INT NOT NULL,
