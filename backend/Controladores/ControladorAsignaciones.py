@@ -87,3 +87,18 @@ def monitorearAlumnos():
 		"join asignacionesalumnos a2 on a.noControl = a2.noControl group by a.noControl"
 	)
 	return rows
+
+
+def pendientesRevisar():
+	"""Obtiene las tareas que tienen estado P (pendiente)"""
+	sql = "select asi.idasignacion, asi.nombre as asignacion, al.noControl, concat(al.nombre, ' ', al.apPaterno, ' ', al.apMaterno) as alumno, " \
+		  "aa.estado, aa.nota, concat(asi.finRecibos,'') as fecha, 'archivos' from asignaciones asi join asignacionesalumnos aa on  " \
+		  "asi.idAsignacion=aa.idAsignacion join alumnos al on al.noControl=aa.noControl where aa.estado = 'P'"
+	rows = executeQuery(sql)
+	for row in range(len(rows)):
+		sql = "select nombre, concat('/documentos/alumno/',idAsignacion,'/',idDocumentoalumno) as ruta from documentosalumnos where " \
+			  " idasignacion = " + str(rows[row]['idasignacion']) + " and noControl = '" + str(rows[row]['noControl']) + "'"
+		rows2 = executeQuery(sql)
+		rows[row]['archivos'] = dict.fromkeys({}, [])
+		rows[row]['archivos'] = rows2
+	return rows
