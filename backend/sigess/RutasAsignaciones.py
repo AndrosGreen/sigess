@@ -9,6 +9,7 @@ from sigess.utils import admin_required, alumno_required
 
 @app.route('/asignaciones/creaAsignacion', methods=['POST'])
 @login_required
+@admin_required
 def registraAsignacion():
     """Registra una asignacion y con sus relaciones a los alumnos y documentos"""
     _json = request.json
@@ -37,6 +38,7 @@ def registraAsignacion():
 
 @app.route('/asignaciones/modificarAsignacion', methods=['POST'])
 @login_required
+@admin_required
 def modificarAsignacion():
     """Modifica la asignación"""
     _json = request.json
@@ -52,6 +54,7 @@ def modificarAsignacion():
 
 @app.route('/asignaciones/eliminaAsignacion', methods=['POST'])
 @login_required
+@admin_required
 def eliminarAsignacion():
     """Elimina la asignación"""
     _json = request.json
@@ -64,6 +67,7 @@ def eliminarAsignacion():
 
 @app.route('/asignaciones/mostrarAsignaciones', methods=['GET'])
 @login_required
+@admin_required
 def mostarAsignaciones():
     """Muestra una lista de las asignaciones"""
     assignment = ControladorAsignaciones.obtenerAsignaciones()
@@ -76,4 +80,13 @@ def mostarAsignaciones():
 def obtenerAsignacionesAlumnos():
     """Obtiene datos de los alumnos y sus asignaciones hechas y las asignaciones totales que tienen"""
     asignaciones = ControladorAsignaciones.monitorearAlumnos()
+    return jsonify(asignaciones)
+
+
+@app.route('/asignaciones/pendientesDeRevisar', methods=['GET'])
+@login_required
+@admin_required
+def obtenerPendientes():
+    """Obtiene la lista de las tareas pendientes de revisar por el administrador"""
+    asignaciones = ControladorAsignaciones.pendientesRevisar()
     return jsonify(asignaciones)
