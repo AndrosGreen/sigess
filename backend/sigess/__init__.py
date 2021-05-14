@@ -24,6 +24,7 @@ login_manager.init_app(app)
 
 
 from sigess import RutasUsuarios
+from sigess import RutasAsignaciones
 from sigess import RutasAlumnos
 from sigess import RutasRequisitos
 from sigess import RutasAdmins

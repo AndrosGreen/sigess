@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`Asignaciones` (
   `nombre` VARCHAR(50) NOT NULL,
   `inicioRecibos` DATE NOT NULL,
   `finRecibos` DATE NOT NULL,
-  `etapa` INT NOT NULL,
   PRIMARY KEY (`idAsignacion`))
 ENGINE = InnoDB;
 
@@ -59,18 +58,18 @@ DROP TABLE IF EXISTS `SIGESS`.`AsignacionesAlumnos` ;
 CREATE TABLE IF NOT EXISTS `SIGESS`.`AsignacionesAlumnos` (
   `estado` ENUM('P', 'A', 'R') NOT NULL,
   `nota` VARCHAR(255) NULL,
-  `Asignaciones_idAsignacion` INT NOT NULL,
-  `Alumnos_noControl` CHAR(9) NOT NULL,
-  PRIMARY KEY (`Asignaciones_idAsignacion`, `Alumnos_noControl`),
-  INDEX `fk_AsignacionesAlumnos_Asignaciones1_idx` (`Asignaciones_idAsignacion` ASC) VISIBLE,
-  INDEX `fk_AsignacionesAlumnos_Alumnos1_idx` (`Alumnos_noControl` ASC) VISIBLE,
+  `idAsignacion` INT NOT NULL,
+  `noControl` CHAR(9) NOT NULL,
+  PRIMARY KEY (`idAsignacion`, `noControl`),
+  INDEX `fk_AsignacionesAlumnos_Asignaciones1_idx` (`idAsignacion` ASC) VISIBLE,
+  INDEX `fk_AsignacionesAlumnos_Alumnos1_idx` (`noControl` ASC) VISIBLE,
   CONSTRAINT `fk_AsignacionesAlumnos_Asignaciones1`
-    FOREIGN KEY (`Asignaciones_idAsignacion`)
+    FOREIGN KEY (`idAsignacion`)
     REFERENCES `SIGESS`.`Asignaciones` (`idAsignacion`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_AsignacionesAlumnos_Alumnos1`
-    FOREIGN KEY (`Alumnos_noControl`)
+    FOREIGN KEY (`noControl`)
     REFERENCES `SIGESS`.`Alumnos` (`noControl`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -165,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`DocumentosAlumnos` (
   INDEX `fk_DocumentosAlumnos_AsignacionesAlumnos1_idx` (`idAsignacion` ASC, `noControl` ASC) VISIBLE,
   CONSTRAINT `fk_DocumentosAlumnos_AsignacionesAlumnos1`
     FOREIGN KEY (`idAsignacion` , `noControl`)
-    REFERENCES `SIGESS`.`AsignacionesAlumnos` (`Asignaciones_idAsignacion` , `Alumnos_noControl`)
+    REFERENCES `SIGESS`.`AsignacionesAlumnos` (`idAsignacion` , `noControl`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;

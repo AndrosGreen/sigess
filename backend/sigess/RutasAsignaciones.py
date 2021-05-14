@@ -1,9 +1,11 @@
+
 from flask import jsonify, request
 from flask_login import login_required, current_user
 from Modelos.Asignacion import Asignacion
 from Modelos.Documentos import Documentos
 from Controladores import ControladorAsignaciones
 from sigess import app
+from sigess.utils import admin_required, alumno_required
 
 @app.route('/asignaciones/creaAsignacion', methods=['POST'])
 @login_required
@@ -66,7 +68,12 @@ def mostarAsignaciones():
     """Muestra una lista de las asignaciones"""
     assignment = ControladorAsignaciones.obtenerAsignaciones()
     return jsonify(assignment)
-
-
-
-
+  
+ 
+@app.route('/asignaciones/obtenerAsignacionesAlumnos', methods=['GET'])
+@login_required
+@admin_required
+def obtenerAsignacionesAlumnos():
+    """Obtiene datos de los alumnos y sus asignaciones hechas y las asignaciones totales que tienen"""
+    asignaciones = ControladorAsignaciones.monitorearAlumnos()
+    return jsonify(asignaciones)
