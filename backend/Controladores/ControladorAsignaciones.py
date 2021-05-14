@@ -17,10 +17,12 @@ def subirPDF(nombre, archivo):
 	data = (nombre, archivo)
 	executeStatement(sql, data)
 
+
 def monitorearAlumnos():
-	"""Obtiene los alumnos y las tareas que han hecho y las que tienen en total"""
-	rows = executeQuery("select a.noControl, concat(a.nombre,' ', a.apPaterno,' ', a.apMaterno) as nombre, "
-						"count(a.noControl) as Tareas, (select count(l.Asignaciones_idAsignacion) from asign"
-						"acionesalumnos l where l.Alumnos_noControl=a.noControl) as Total from alumnos a nat"
-						"ural join asignacionesalumnos p where p.estado='A'")
+	"""Obtiene los alumnos, sus tareas completas y las que tienen en total"""
+	rows = executeQuery(
+		"select a.noControl, concat(a.nombre,' ', a.apPaterno,' ', a.apMaterno) as nombre, "
+		"cast(sum(if(a2.estado='A', 1, 0)) as SIGNED) as completos, count(a2.idAsignacion) as totales from alumnos a "
+		"join asignacionesalumnos a2 on a.noControl = a2.noControl group by a.noControl"
+	)
 	return rows
