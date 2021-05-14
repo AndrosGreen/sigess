@@ -13,7 +13,8 @@ def registraAsignacion():
     assignment = Asignacion(
         _json['nombre'],
         _json['fechaIni'],
-        _json['fechaFin']
+        _json['fechaFin'],
+        _json['instruccion']
     )
     documents = []
     for doc in _json['documentos']:
@@ -25,7 +26,7 @@ def registraAsignacion():
     # Obtiene id de la signacion e inserta
     ID = ControladorAsignaciones.agregarAsignacion(assignment)
     ID =  ID['idAsignacion']
-    ControladorAsignaciones.agregarAsignacionAlumnos(ID, _json['instruccion'])
+    ControladorAsignaciones.agregarAsignacionAlumnos(ID)
     ControladorAsignaciones.agregaDocAlumnos(ID, documents)
     ControladorAsignaciones.agregaDocAdmin(ID, documents)
     return {
@@ -59,13 +60,11 @@ def eliminarAsignacion():
     }
 
 
-@app.route('/asignaciones/mostrarAsignaciones', methods=['POST'])
+@app.route('/asignaciones/mostrarAsignaciones', methods=['GET'])
 @login_required
 def mostarAsignaciones():
     """Muestra una lista de las asignaciones"""
-    _json = request.json
-    _noControl = _json['noControl']
-    assignment = ControladorAsignaciones.obtenerAsignaciones(_noControl)
+    assignment = ControladorAsignaciones.obtenerAsignaciones()
     return jsonify(assignment)
 
 

@@ -20,17 +20,17 @@ def subirPDF(nombre, archivo):
 # Ingresa a la base de datos de asignaciones
 def agregarAsignacion(assignment):
 	"""Agrega una nueva asignacion"""
-	sql = "insert into asignaciones values (null, %s, %s, %s)"
-	data = (assignment.nombre, assignment.inicioRecibos, assignment.finRecibos)
+	sql = "insert into asignaciones values (null, %s, %s, %s, %s)"
+	data = (assignment.nombre, assignment.inicioRecibos, assignment.finRecibos, assignment.instruccion)
 	executeStatement(sql, data)
 	rows = executeQuery("select idAsignacion from asignaciones  order by idAsignacion desc limit 1")
 	return rows[0]
 
 
-def agregarAsignacionAlumnos(idAsignacion, nota):
+def agregarAsignacionAlumnos(idAsignacion):
 	"""Inserta la relacion de AsingacionesAlumnos"""
-	sql = "insert into asignacionesalumnos (select 'P', %s, %s, noControl from alumnos)"
-	data = (nota, idAsignacion)
+	sql = "insert into asignacionesalumnos (select 'P', null, %s, noControl from alumnos)"
+	data = (idAsignacion)
 	executeStatement(sql, data)
 
 
@@ -48,14 +48,10 @@ def agregaDocAdmin(idAsignacion, documents):
 		data = (nameDocument.nombre, nameDocument.documento, idAsignacion)
 		executeStatement(sql, data)
 
-def modificarAsignacion(id, name, dateS, dateE, note):
+def modificarAsignacion(id, name, dateS, dateE, instruccion):
 	"""Modifica los valores de las asignaciones como en asignaciones del alumno"""
-	sql = "update asignaciones set nombre = %s, inicioRecibos = %s, finRecibos = %s where idAsignacion = %s"
-	data = (name, dateS, dateE, id)
-	executeStatement(sql, data)
-	# Modificamos la tabla de relacion con el alumno
-	sql = "update asignacionesalumnos set nota = %s where idAsignacion = %s"
-	data = (note, id)
+	sql = "update asignaciones set nombre = %s, inicioRecibos = %s, finRecibos = %s, instruccion = %s where idAsignacion = %s"
+	data = (name, dateS, dateE, instruccion ,id)
 	executeStatement(sql, data)
 
 
@@ -69,18 +65,16 @@ def eliminaAsignacion(idAsignacion):
 		raise error
 
 
-def obtenerAsignaciones(noControl):
+def obtenerAsignaciones():
 	"""Obtiene una lista de las asignaciones"""
-	sql = "select asi.idAsignacion, (asi.nombre), concat(asi.finRecibos, '') as fecha, al.nota as instrucciones, 'archivos' from " \
-	" asignaciones asi join asignacionesalumnos al on asi.idAsignacion=al.idAsignacion" \
-	" where al.noControl = %s "
-	data = noControl
-	rows = executeQueryWithData(sql, data)
-	print(rows)
+	sql = "select distinct(idAsignacion), (nombre), concat(finRecibos, '') as fecha, instruccion as instrucciones, 'archivos' from " \
+	" asignaciones"
+
+	rows = executeQuery(sql)
 	for row in range(len(rows)):
-		sql = "select nombre, concat('/documentos/alumnos/',idAsignacion,'/',idDocumentoAlumno) as ruta from documentosalumnos where noControl = %s " \
-		" and idAsignacion = " + str(rows[row]['idAsignacion'])
-		rows2 = executeQueryWithData(sql, data)
+		sql = "select nombre, concat('/documentos/admin/',idAsignacion,'/',idDocumentoadmin) as ruta from documentosadmin where " \
+		" idAsignacion = " + str(rows[row]['idAsignacion'])
+		rows2 = executeQuery(sql)
 		rows[row]['archivos'] = dict.fromkeys({}, [])
 		rows[row]['archivos'] = rows2
 	return rows
