@@ -102,3 +102,14 @@ def pendientesRevisar():
 		rows[row]['archivos'] = dict.fromkeys({}, [])
 		rows[row]['archivos'] = rows2
 	return rows
+
+
+def listaAsignacionesAlumno(noControl):
+	"""Lista las tareas del alumno indicado por el no. de control"""
+	sql = "select a.nombre, aa.* " \
+		"from asignacionesalumnos aa " \
+		"join asignaciones a on aa.idAsignacion = a.idAsignacion " \
+		"where aa.noControl=%s;"
+	datos = noControl
+	filas = executeQueryWithData(sql, datos)
+	return filas

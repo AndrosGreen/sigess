@@ -7,6 +7,7 @@ from Controladores import ControladorAsignaciones
 from sigess import app
 from sigess.utils import admin_required, alumno_required
 
+
 @app.route('/asignaciones/creaAsignacion', methods=['POST'])
 @login_required
 @admin_required
@@ -21,20 +22,21 @@ def registraAsignacion():
     )
     documents = []
     for doc in _json['documentos']:
-        newDoc = Documentos (
+        newDoc = Documentos(
             doc['nombre'],
             doc['documento']
         )
         documents.append(newDoc)
     # Obtiene id de la signacion e inserta
     ID = ControladorAsignaciones.agregarAsignacion(assignment)
-    ID =  ID['idAsignacion']
+    ID = ID['idAsignacion']
     ControladorAsignaciones.agregarAsignacionAlumnos(ID)
     ControladorAsignaciones.agregaDocAlumnos(ID, documents)
     ControladorAsignaciones.agregaDocAdmin(ID, documents)
     return {
         "mensaje": "Agregado correctamente"
     }
+
 
 @app.route('/asignaciones/modificarAsignacion', methods=['POST'])
 @login_required
@@ -51,6 +53,7 @@ def modificarAsignacion():
     return {
         "mensaje": "Modificados correctamente"
     }
+
 
 @app.route('/asignaciones/eliminaAsignacion', methods=['POST'])
 @login_required
@@ -90,3 +93,12 @@ def obtenerPendientes():
     """Obtiene la lista de las tareas pendientes de revisar por el administrador"""
     asignaciones = ControladorAsignaciones.pendientesRevisar()
     return jsonify(asignaciones)
+
+
+@app.route('/asignaciones/listaAsignacionesAlumnoActual', methods=['GET'])
+@login_required
+@alumno_required
+def listaAsignacionesAlumnoActual():
+    alumnoActual = current_user
+    asignacionesAlumno = ControladorAsignaciones.listaAsignacionesAlumno(alumnoActual.usuario)
+    return jsonify(asignacionesAlumno)
