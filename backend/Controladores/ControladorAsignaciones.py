@@ -1,3 +1,4 @@
+from sigess import utils
 from sigess.db import executeQuery, executeStatement, executeQueryWithData
 from Modelos.Asignacion import Asignacion
 import datetime
@@ -131,3 +132,29 @@ def obtenerDocumentosEnAsignacion(idAsignacion, idAlumno):
 	datos = (idAsignacion, idAlumno)
 	documentos = executeQueryWithData(sql, datos)
 	return documentos
+
+
+def obtenerPDFAlumno(idAsignacion, idAlumno, idDocumento):
+	"""Obtiene el pdf del alumno"""
+	sql = "select nombre, documento " \
+		"from documentosalumnos where idDocumentoAlumno=%s and idAsignacion=%s and noControl=%s;"
+	datos = (idAsignacion, idAlumno, idDocumento)
+	filas = executeQueryWithData(sql, datos)
+	fila = filas[0]
+	titulo = fila['nombre']
+	archivo = fila['documento']
+	pdf = utils.generaVistaPDFConTitulo(archivo, f"{titulo}-{idAlumno}")
+	return pdf
+
+
+def obtenerPDFAdmin(idAsignacion, idDocumento):
+	"""Obtiene el pdf del alumno"""
+	sql = "select nombre, documento " \
+		"from documentosadmin where idAsignacion=%s and idDocumentoAdmin=%s;"
+	datos = (idAsignacion, idDocumento)
+	filas = executeQueryWithData(sql, datos)
+	fila = filas[0]
+	titulo = fila['nombre']
+	archivo = fila['documento']
+	pdf = utils.generaVistaPDFConTitulo(archivo, f"{titulo}-Base")
+	return pdf
