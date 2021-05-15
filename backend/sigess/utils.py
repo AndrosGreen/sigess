@@ -63,6 +63,8 @@ def generaVistaPDFConTitulo(b64, titulo):
     Genera una respuesta para ver un archivo como pdf
     dada una cadena base64 como entrada y un titulo
     """
+    if b64 is None:
+        return "Documento no encontrado"
     binario = b64decode(b64)
     respuesta = make_response(binario)
     respuesta.headers['Content-Type'] = 'application/pdf'

@@ -138,7 +138,7 @@ def obtenerPDFAlumno(idAsignacion, idAlumno, idDocumento):
 	"""Obtiene el pdf del alumno"""
 	sql = "select nombre, documento " \
 		"from documentosalumnos where idDocumentoAlumno=%s and idAsignacion=%s and noControl=%s;"
-	datos = (idAsignacion, idAlumno, idDocumento)
+	datos = (idDocumento, idAsignacion, idAlumno)
 	filas = executeQueryWithData(sql, datos)
 	fila = filas[0]
 	titulo = fila['nombre']

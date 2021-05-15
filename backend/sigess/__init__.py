@@ -30,6 +30,7 @@ from sigess import RutasRequisitos
 from sigess import RutasAdmins
 from sigess import RutasPDFEjemplo
 from sigess import RutasAsignaciones
+from sigess import RutasDocumentos
 
 if __name__ == "__main__":
     app.run()
