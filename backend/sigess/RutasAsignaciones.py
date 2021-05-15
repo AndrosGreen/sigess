@@ -102,3 +102,15 @@ def listaAsignacionesAlumnoActual():
     alumnoActual = current_user
     asignacionesAlumno = ControladorAsignaciones.listaAsignacionesAlumno(alumnoActual.usuario)
     return jsonify(asignacionesAlumno)
+
+
+@app.route('/asignaciones/obtenerDocumentosEnAsignacion', methods=['POST'])
+@login_required
+@alumno_required
+def obtenerDocumentosEnAsignacion():
+    """Obtiene los documentos de la asignacion y el alumno indicados"""
+    json = request.json
+    idAsignacion = json['idAsignacion']
+    idAlumno = json['idAlumno']
+    documentos = ControladorAsignaciones.obtenerDocumentosEnAsignacion(idAsignacion, idAlumno)
+    return jsonify(documentos)
