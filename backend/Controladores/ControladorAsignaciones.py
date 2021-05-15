@@ -1,6 +1,8 @@
 from sigess.db import executeQuery, executeStatement, executeQueryWithData
 from Modelos.Asignacion import Asignacion
 import datetime
+
+
 def obtenerPDF(idDocumento):
 	"""Obtiene el pdf indicado por el ID"""
 	sql = "select archivo from documentosPrueba where id=%s"
@@ -17,6 +19,7 @@ def subirPDF(nombre, archivo):
 	data = (nombre, archivo)
 	executeStatement(sql, data)
 
+
 # Ingresa a la base de datos de asignaciones
 def agregarAsignacion(assignment):
 	"""Agrega una nueva asignacion"""
@@ -30,7 +33,7 @@ def agregarAsignacion(assignment):
 def agregarAsignacionAlumnos(idAsignacion):
 	"""Inserta la relacion de AsingacionesAlumnos"""
 	sql = "insert into asignacionesalumnos (select 'P', null, %s, noControl from alumnos)"
-	data = (idAsignacion)
+	data = idAsignacion
 	executeStatement(sql, data)
 
 
@@ -41,6 +44,7 @@ def agregaDocAlumnos(idAsignacion, documents):
 		data = (nameDocument.nombre, idAsignacion)
 		executeStatement(sql, data)
 
+
 def agregaDocAdmin(idAsignacion, documents):
 	"""Inserta los documentos del adminisitrador"""
 	for nameDocument in documents:
@@ -48,10 +52,12 @@ def agregaDocAdmin(idAsignacion, documents):
 		data = (nameDocument.nombre, nameDocument.documento, idAsignacion)
 		executeStatement(sql, data)
 
+
 def modificarAsignacion(id, name, dateS, dateE, instruccion):
 	"""Modifica los valores de las asignaciones como en asignaciones del alumno"""
-	sql = "update asignaciones set nombre = %s, inicioRecibos = %s, finRecibos = %s, instruccion = %s where idAsignacion = %s"
-	data = (name, dateS, dateE, instruccion ,id)
+	sql = "update asignaciones set nombre = %s, inicioRecibos = %s, finRecibos = %s, instruccion = %s " \
+		"where idAsignacion = %s"
+	data = (name, dateS, dateE, instruccion, id)
 	executeStatement(sql, data)
 
 
@@ -67,17 +73,18 @@ def eliminaAsignacion(idAsignacion):
 
 def obtenerAsignaciones():
 	"""Obtiene una lista de las asignaciones"""
-	sql = "select distinct(idAsignacion), (nombre), concat(finRecibos, '') as fecha, instruccion as instrucciones, 'archivos' from " \
-	" asignaciones"
+	sql = "select distinct(idAsignacion), (nombre), concat(finRecibos, '') as fecha, " \
+		"instruccion as instrucciones, 'archivos' " \
+		"from asignaciones"
 
 	rows = executeQuery(sql)
 	for row in range(len(rows)):
-		sql = "select nombre, concat('/documentos/admin/',idAsignacion,'/',idDocumentoadmin) as ruta from documentosadmin where " \
-		" idAsignacion = " + str(rows[row]['idAsignacion'])
+		sql = "select nombre, concat('/documentos/admin/',idAsignacion,'/',idDocumentoadmin) as ruta from documentosadmin where idAsignacion = " + str(rows[row]['idAsignacion'])
 		rows2 = executeQuery(sql)
 		rows[row]['archivos'] = dict.fromkeys({}, [])
 		rows[row]['archivos'] = rows2
 	return rows
+
 
 def monitorearAlumnos():
 	"""Obtiene los alumnos, sus tareas completas y las que tienen en total"""
@@ -91,13 +98,16 @@ def monitorearAlumnos():
 
 def pendientesRevisar():
 	"""Obtiene las tareas que tienen estado P (pendiente)"""
-	sql = "select asi.idasignacion, asi.nombre as asignacion, al.noControl, concat(al.nombre, ' ', al.apPaterno, ' ', al.apMaterno) as alumno, " \
-		  "aa.estado, aa.nota, concat(asi.finRecibos,'') as fecha, 'archivos' from asignaciones asi join asignacionesalumnos aa on  " \
-		  "asi.idAsignacion=aa.idAsignacion join alumnos al on al.noControl=aa.noControl where aa.estado = 'P'"
+	sql = "select asi.idasignacion, asi.nombre as asignacion, al.noControl, " \
+		"concat(al.nombre, ' ', al.apPaterno, ' ', al.apMaterno) as alumno, " \
+		"aa.estado, aa.nota, concat(asi.finRecibos,'') as fecha, 'archivos' " \
+		"from asignaciones asi " \
+		"join asignacionesalumnos aa on asi.idAsignacion=aa.idAsignacion " \
+		"join alumnos al on al.noControl=aa.noControl " \
+		"where aa.estado = 'P'"
 	rows = executeQuery(sql)
 	for row in range(len(rows)):
-		sql = "select nombre, concat('/documentos/alumno/',idAsignacion,'/',idDocumentoalumno) as ruta from documentosalumnos where " \
-			  " idasignacion = " + str(rows[row]['idasignacion']) + " and noControl = '" + str(rows[row]['noControl']) + "'"
+		sql = "select nombre, concat('/documentos/alumno/', idAsignacion,'/', idDocumentoalumno) as ruta from documentosalumnos where idasignacion = " + str(rows[row]['idasignacion']) + " and noControl = '" + str(rows[row]['noControl']) + "'"
 		rows2 = executeQuery(sql)
 		rows[row]['archivos'] = dict.fromkeys({}, [])
 		rows[row]['archivos'] = rows2
@@ -113,3 +123,11 @@ def listaAsignacionesAlumno(noControl):
 	datos = noControl
 	filas = executeQueryWithData(sql, datos)
 	return filas
+
+
+def obtenerDocumentosEnAsignacion(idAsignacion, idAlumno):
+	"""Obtiene los documentos de una asignación y de un alumno"""
+	sql = "select nombre, idDocumentoAlumno from documentosalumnos where idAsignacion=%s and noControl=%s"
+	datos = (idAsignacion, idAlumno)
+	documentos = executeQueryWithData(sql, datos)
+	return documentos
