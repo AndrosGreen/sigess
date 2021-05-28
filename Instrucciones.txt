@@ -31,3 +31,7 @@ npm start
 npm install react-bootstrap bootstrap
 npm i axios-cookiejar-support
 npm i react-file-base64
+
+pytest 
+
+python -m pip install pytest
