@@ -111,7 +111,6 @@ CREATE TABLE IF NOT EXISTS `SIGESS`.`Requisitos` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `SIGESS`.`AlumnosRequisitos`
 -- -----------------------------------------------------
@@ -197,10 +196,13 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 insert into Alumnos values
 ('S18120183', 'Daniel', 'Cerna', 'Torres', 'cernadaniel32@gmail.com', MD5('KKCK'), '4451091780', 'Sistemas computacionales', 'Training dojo', 'Luis German Gutierrez Torres', 'ITSUR');
 insert into Admins values
-(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F');
+(1, 'Jorge', 'Admin', 'pidielpez@gmail.com', md5('JuasJuas'), 'F'),
+(2,'GEMA','Idiomas','gema@gmail.com','bf012e2220ad9dbb07740f2519057746','T');
 insert into AlumnosPreRegistro values
 ('S18120160', md5('MAMR'));
 
+INSERT INTO `requisitos` VALUES (1,'Ingles',2,'Acreditado nivel 5');
+INSERT INTO `alumnosrequisitos` VALUES ('S18120183', 1, 'P');
 create table documentosPrueba(
 	id int primary key auto_increment,
     nombre varchar(60),
