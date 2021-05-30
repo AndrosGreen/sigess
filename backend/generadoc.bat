@@ -1,0 +1,1 @@
+python -m pdoc --html sigess Modelos Controladores --force
