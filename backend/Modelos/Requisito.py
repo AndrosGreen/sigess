@@ -1,4 +1,5 @@
 class Requisito:
+    """Representa un requisito"""
     def __init__(self, idRequisito, nombre, revisadoPor, detalleARevisar):
         self.idRequisito = idRequisito
         self.nombre = nombre

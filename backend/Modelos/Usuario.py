@@ -1,10 +1,12 @@
 from flask_login import UserMixin
 
 
-# El usuario es una abstracción de un alumno o admin
-# para reconocer de manera rápida en operaciones que requieran discernir
-# Hereda de UserMixin para poder usarse en login y logout
 class Usuario(UserMixin):
+    """
+    El usuario es una abstracción de un alumno o admin
+    para reconocer de manera rápida en operaciones que requieran discernir
+    Hereda de UserMixin para poder usarse en login y logout
+    """
     def __init__(self, usuario, clave, nivelDePermisos):
         self.usuario = usuario
         self.clave = clave
@@ -17,6 +19,7 @@ class Usuario(UserMixin):
 
     @classmethod
     def adminDesdeFila(cls, fila):
+        nivelDePermisos = 2  # Revisor por defecto
         if fila['esRevisor'] == 'F':
             nivelDePermisos = 3
         elif fila['esRevisor'] == 'T':

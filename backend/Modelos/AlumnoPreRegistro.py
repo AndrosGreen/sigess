@@ -1,5 +1,6 @@
 
 class AlumnoPreRegistro:
+    """Representa un alumno del preregistro"""
     def __init__(self, noControl, clave):
         self.noControl = noControl
         self.clave = clave

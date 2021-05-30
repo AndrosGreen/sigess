@@ -1,11 +1,14 @@
 from sigess import utils
 from sigess.db import executeQuery, executeStatement, executeQueryWithData
-from Modelos.Asignacion import Asignacion
-import datetime
+
+
 
 
 def obtenerPDF(idDocumento):
-	"""Obtiene el pdf indicado por el ID"""
+	"""(Función de prueba) Obtiene el pdf indicado por el ID
+	Args:
+		idDocumento: El id del documento a obtener
+	"""
 	sql = "select archivo from documentosPrueba where id=%s"
 	datos = idDocumento
 	filas = executeQueryWithData(sql, datos)
@@ -15,31 +18,45 @@ def obtenerPDF(idDocumento):
 
 
 def subirPDF(nombre, archivo):
-	"""Sube un pdf asumiendo que archivo es el pdf en base64"""
+	"""(Función de prueba) Sube un pdf asumiendo que archivo es el pdf en base64
+	Args:
+		nombre: El nombre del archivo
+		archivo: El archivo en base64 a subir
+	"""
 	sql = f"insert into documentosPrueba values(null, %s, %s)"
 	data = (nombre, archivo)
 	executeStatement(sql, data)
 
 
-# Ingresa a la base de datos de asignaciones
-def agregarAsignacion(assignment):
-	"""Agrega una nueva asignacion"""
+
+def agregarAsignacion(asignacion):
+	"""Agrega una nueva asignacion
+	Args:
+		asignacion: La asignacion a agregar
+	"""
 	sql = "insert into asignaciones values (null, %s, %s, %s, %s)"
-	data = (assignment.nombre, assignment.inicioRecibos, assignment.finRecibos, assignment.instruccion)
+	data = (asignacion.nombre, asignacion.inicioRecibos, asignacion.finRecibos, asignacion.instruccion)
 	executeStatement(sql, data)
 	rows = executeQuery("select idAsignacion from asignaciones  order by idAsignacion desc limit 1")
 	return rows[0]
 
 
 def agregarAsignacionAlumnos(idAsignacion):
-	"""Inserta la relacion de AsingacionesAlumnos"""
+	"""Inserta la relacion de AsingacionesAlumnos
+	Args:
+		idAsignacion: El id de la asignación a agregar a los alumnos
+	"""
 	sql = "insert into asignacionesalumnos (select 'P', null, %s, noControl from alumnos)"
 	data = idAsignacion
 	executeStatement(sql, data)
 
 
 def agregaDocAlumnos(idAsignacion, documents):
-	"""Inserta la relación de los alumnos con los docuementos"""
+	"""Inserta la relación de los alumnos con los docuementos
+	Args:
+		idAsignacion: El id de la asignacion que tendrá los documentos
+		documents: Los documentos que se agregarán a la asignación y el alumno podrá subir
+	"""
 	for nameDocument in documents:
 		sql = "insert into documentosalumnos (select %s, null, null, %s, noControl from alumnos)"
 		data = (nameDocument.nombre, idAsignacion)
@@ -47,7 +64,11 @@ def agregaDocAlumnos(idAsignacion, documents):
 
 
 def agregaDocAdmin(idAsignacion, documents):
-	"""Inserta los documentos del adminisitrador"""
+	"""Inserta los documentos del adminisitrador
+	Args:
+		idAsignacion: EL id de la asignación que tendrá los documentos
+		documents: Los documentos del administrador de solo lectura para alumnos
+	"""
 	for nameDocument in documents:
 		sql = "insert into documentosadmin values (%s, %s, null, %s)"
 		data = (nameDocument.nombre, nameDocument.documento, idAsignacion)
@@ -55,7 +76,14 @@ def agregaDocAdmin(idAsignacion, documents):
 
 
 def modificarAsignacion(id, name, dateS, dateE, instruccion):
-	"""Modifica los valores de las asignaciones como en asignaciones del alumno"""
+	"""Modifica los valores de las asignaciones como en asignaciones del alumno
+	Args:
+		id: El id de la asignación
+		name: El nombre de la asignación
+		dateS: La fecha de apertura de la asignación
+		dateE: La fecha de cierre de la asignación
+		instruccion: La intrucción a mostrar en la asignación
+	"""
 	sql = "update asignaciones set nombre = %s, inicioRecibos = %s, finRecibos = %s, instruccion = %s " \
 		"where idAsignacion = %s"
 	data = (name, dateS, dateE, instruccion, id)
@@ -63,7 +91,10 @@ def modificarAsignacion(id, name, dateS, dateE, instruccion):
 
 
 def eliminaAsignacion(idAsignacion):
-	"""Elimina una asignacion por su id"""
+	"""Elimina una asignacion por su id
+	Args:
+		idAsignacion: El id de la asignación a eliminar de la base
+	"""
 	try:
 		sql = "delete from asignaciones where idAsignacion = %s"
 		data = idAsignacion
@@ -73,7 +104,7 @@ def eliminaAsignacion(idAsignacion):
 
 
 def obtenerAsignaciones():
-	"""Obtiene una lista de las asignaciones"""
+	"""Obtiene la lista de las asignaciones"""
 	sql = "select distinct(idAsignacion), (nombre), concat(finRecibos, '') as fecha, " \
 		"instruccion as instrucciones, 'archivos' " \
 		"from asignaciones"
@@ -116,7 +147,10 @@ def pendientesRevisar():
 
 
 def listaAsignacionesAlumno(noControl):
-	"""Lista las tareas del alumno indicado por el no. de control"""
+	"""Lista las tareas del alumno indicado por el no. de control
+	Args:
+		noControl: El numero de control del alumno a obtener las asignaciones
+	"""
 	sql = "select a.nombre, aa.* " \
 		"from asignacionesalumnos aa " \
 		"join asignaciones a on aa.idAsignacion = a.idAsignacion " \

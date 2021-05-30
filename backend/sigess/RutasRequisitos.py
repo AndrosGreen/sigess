@@ -11,7 +11,7 @@ from sigess.utils import admin_required
 @app.route('/requisitos/crea', methods=['POST'])
 @login_required
 def creaRequisito():
-    # TODO: Mensaje cuando el nombre ya exista
+    """Crea un requisito"""
     json = request.json
 
     requisito = Requisito(
@@ -33,7 +33,7 @@ def creaRequisito():
 @app.route('/requisitos/elimina', methods=['POST'])
 @login_required
 def eliminaRequisito():
-    # TODO: Mensaje cuando el id no exista
+    """Elimina un requisito"""
     _json = request.json
     _id = _json['idRequisito']
     ControladorRequisitos.eliminarRequisito(_id)
@@ -46,7 +46,7 @@ def eliminaRequisito():
 @app.route('/requisitos/obtenerUno', methods=['POST'])
 @login_required
 def obtenerRequisito():
-    # Todo: Manejar cuando requsito es none
+    "Obtiene un requisito"
     _json = request.json
     _id = _json['idRequisito']
     ControladorRequisitos.obtenerRequisito(_id)
@@ -99,6 +99,7 @@ def actualizarRequisito():
         "mensaje": "Se actualizó el requisito exitosamente"
     })
 
+
 @app.route('/requisitos/obtenerTodos', methods=['GET'])
 @login_required
 def obtenerRequisitosTodos():
@@ -115,6 +116,7 @@ def obtenerAlumnosRevisor():
     _idAdmin = _json['idAdmin']
     requirements = ControladorRequisitos.listaRequisitosAdmin(_idAdmin)
     return jsonify(requirements)
+
 
 @app.route('/requisitos/requisitoAdmin', methods=['POST'])
 @login_required

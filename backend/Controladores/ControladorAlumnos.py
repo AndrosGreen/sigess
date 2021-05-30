@@ -4,7 +4,10 @@ from sigess.db import executeStatement, executeQueryWithData, executeQuery
 
 
 def obtenAlumnoPorNombre(nombreAlumno):
-    """Obtiene un alumno dado un nombre"""
+    """Obtiene un alumno dado un nombre
+    Args:
+        nombreAlumno: El nombre del alumno a obtener
+    """
     sql = "select * from alumnos where nombre = %s limit 1"
     data = nombreAlumno
     filas = executeQueryWithData(sql, data)
@@ -16,7 +19,10 @@ def obtenAlumnoPorNombre(nombreAlumno):
 
 
 def creaAlumno(alumno):
-    """Crea un alumno y lo devuelve si sale bien o None si no"""
+    """Crea un alumno y lo devuelve si sale bien o None si no
+    Args:
+        alumno: El objeto alumno a crear en la base
+    """
     sql = "insert into alumnos values(%s, %s, %s, %s, %s, md5(%s), %s, %s, %s, %s, %s)"
     data = (alumno.noControl, alumno.nombre, alumno.apPaterno,
             alumno.apMaterno, alumno.correo, alumno.clave,
@@ -27,14 +33,20 @@ def creaAlumno(alumno):
 
 
 def eliminaAlumno(noControl):
-    """Elimina un alumno dado su id"""
+    """Elimina un alumno dado su id
+    Args:
+        noControl: El numero de control del alumno a eliminar
+    """
     sql = "delete from alumnos where noControl = %s"
     data = noControl
     executeStatement(sql, data)
 
 
 def modificaAlumno(alumno):
-    """Modifica un alumno"""
+    """Modifica un alumno
+    Args:
+        alumno: El objeto alumno a modificar en la base con base al id
+    """
     sql = 'update alumnos set nombre=%s, ' \
           'apPaterno=%s, apMaterno=%s, correo=%s, clave=md5(%s), ' \
           'carrera=%s, programa=%s, encargado=%s, institucion=%s where noControl=%s'
@@ -45,7 +57,10 @@ def modificaAlumno(alumno):
 
 
 def registraAlumno(alumno):
-    """Registra al alumno, lo borra del preregistro y agrega sus requisitos"""
+    """Registra al alumno, lo borra del preregistro y agrega sus requisitos
+    Args:
+        alumno: El objeto alumno a registrar en la base
+    """
     eliminaPreRegistrado(alumno.noControl)
     creaAlumno(alumno)
     agregaRequisitosAlumno(alumno)
@@ -53,12 +68,16 @@ def registraAlumno(alumno):
 
 
 def listaAlumnos():
+    """Obtiene todos los alumnos"""
     rows = executeQuery("select * from alumnos")
     return rows  
 
 
 def existeAlumnoRegistrado(alumno):
-    """Consulta si existe el alumno a preregistrar en el pre registro"""
+    """Consulta si el alumno a preregistrar ya está registrado
+    Args:
+        alumno: El alumno a consultar si está registrado
+    """
     sql = 'select * from alumnos where noControl=%s'
     data = alumno.noControl
     filas = executeQueryWithData(sql, data)
@@ -66,7 +85,10 @@ def existeAlumnoRegistrado(alumno):
 
 
 def existeAlumnoAPreRegistrar(alumno):
-    """Consulta si existe el alumno a preregistrar en el pre registro"""
+    """Consulta si el alumno está preregistrado
+    Args:
+        alumno: El alumno a consultar si está preregistrado
+    """
     sql = 'select * from alumnospreregistro where noControl=%s'
     data = alumno.noControl
     filas = executeQueryWithData(sql, data)
@@ -74,14 +96,17 @@ def existeAlumnoAPreRegistrar(alumno):
 
 
 def preRegistraAlumno(alumno):
-    """Preregistra un alumno"""
+    """Preregistra un alumno
+    Args:
+        alumno: El objeto alumno a preregistrar
+    """
     sql = 'insert into alumnospreregistro values(%s, md5(%s))'
     data = (alumno.noControl, alumno.clave)
     executeStatement(sql, data)
 
 
 def obtenerAlumnosPreRegistrados():
-    """Devuelve los alumnos preregistrados"""
+    """Obtiene los alumnos preregistrados"""
     sql = "select * from alumnospreregistro"
     filas = executeQuery(sql)
     alumnos = []
@@ -91,6 +116,10 @@ def obtenerAlumnosPreRegistrados():
 
 
 def estaAlumnoPreRegistrado(noControl):
+    """Obtiene si un alumno ya está preregistrado
+    Args:
+        noControl: El numero de control a consultar si ya está preregistrado
+    """
     sql = "select count(*) as conteo from alumnospreregistro where noControl=%s"
     data = noControl
     filas = executeQueryWithData(sql, data)
@@ -100,13 +129,20 @@ def estaAlumnoPreRegistrado(noControl):
 
 
 def eliminaPreRegistrado(noControl):
+    """Elimina el alumno del preregistro usando el numero de control
+    Args:
+        noControl: El número de control del alumno a eliminar del preregistro
+    """
     sql = "delete from alumnospreregistro where noControl=%s"
     data = noControl
     executeStatement(sql, data)
 
 
 def agregaRequisitosAlumno(alumno):
-    """Agrega los requisitos de un alumno a registrar"""
+    """Agrega los requisitos de un alumno a registrar
+    Args:
+        alumno: El objeto alumno al cual se agregarán los requisitos pertinentes en la base
+    """
     sql = "insert into alumnosRequisitos (select %s, idRequisito, 'P' from requisitos)"
     data = alumno.noControl
     executeStatement(sql, data)

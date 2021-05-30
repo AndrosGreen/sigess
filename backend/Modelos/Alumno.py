@@ -1,4 +1,5 @@
 class Alumno:
+    """Representa un alumno"""
     def __init__(self, noControl, nombre, apPaterno,
                  apMaterno, correo, clave, telefono,
                  carrera, programa, encargado, institucion):

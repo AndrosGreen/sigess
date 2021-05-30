@@ -4,8 +4,9 @@ import os
 
 from sigess import app
 
+
+"""Incluye lo necesario para conectarse a a base de datos"""
 mysql = MySQL()
-# MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = os.environ.get("DB_USER")
 app.config['MYSQL_DATABASE_PASSWORD'] = os.environ.get("DB_PASSWORD")
 app.config['MYSQL_DATABASE_DB'] = os.environ.get("DB_DATABASE")
@@ -16,8 +17,12 @@ mysql = MySQL()
 mysql.init_app(app)
 
 
-# Devuelve las filas consultadas
 def executeQueryWithData(sql, data):
+    """Ejecuta una query con datos de entrada
+    Args:
+        sql: La consulta a ejecutar
+        data: Los datos a adjuntar en la consulta
+    """
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -29,6 +34,10 @@ def executeQueryWithData(sql, data):
 
 
 def executeQuery(sql):
+    """Ejecuta una consulta sql y devuelve el resultado
+    Args:
+        sql: La consulta a ejecutar
+    """
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -39,8 +48,12 @@ def executeQuery(sql):
         raise e
 
 
-# Ejecuta una operación que no sea de tipo query
 def executeStatement(sql, data):
+    """Ejecuta operaciones que no devuelvan valor usando datos parametrizados
+    Args:
+        sql: La consulta a ejecutar
+        data: Los parámetros a incluir en la consulta
+    """
     try:
         conn = mysql.connect()
         cursor = conn.cursor()

@@ -1,7 +1,5 @@
-#!/usr/bin/python
-#-*- coding: utf-8 -*-
-
 class Programa:
+	"""Representa un programa"""
 	def __init__(self):
 		self.nombre = None
 

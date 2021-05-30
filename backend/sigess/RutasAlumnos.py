@@ -42,7 +42,7 @@ def obtenerAlumnosPreRegistrados():
 @login_required
 @admin_required
 def eliminaPreRegistrado():
-    """Obtiene alumnos preregistrados"""
+    """Elimina un alumno preregistrados"""
     json = request.json
     noControl = json['noControl']
     if not ControladorAlumnos.estaAlumnoPreRegistrado(noControl):

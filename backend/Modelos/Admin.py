@@ -1,4 +1,5 @@
 class Admin:
+    """Representa un administrador"""
     def __init__(self, idAdmin, nombre, area, correo, clave, esRevisor):
         self.idAdmin = idAdmin
         self.nombre = nombre

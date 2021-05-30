@@ -8,7 +8,10 @@ from sigess import login_manager, app
 
 @login_manager.user_loader
 def cargaUsuario(userID):
-    """Obtiene el usuario al usar current_user"""
+    """Obtiene el usuario al usar current_user
+    Args:
+        userID: El id del usuario a cargar
+    """
     usuario = ControladorUsuarios.obtenerUsuarioPorID(userID)
     return usuario
 

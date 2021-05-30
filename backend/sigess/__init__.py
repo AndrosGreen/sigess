@@ -1,3 +1,7 @@
+"""
+Este es el paquete SIGESS, el punto principal de la apliación.
+Importa y configura flask, las variables de entorno y las rutas de la aplicación
+"""
 from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
@@ -28,7 +32,6 @@ from sigess import RutasAsignaciones
 from sigess import RutasAlumnos
 from sigess import RutasRequisitos
 from sigess import RutasAdmins
-from sigess import RutasPDFEjemplo
 from sigess import RutasAsignaciones
 from sigess import RutasDocumentos
 

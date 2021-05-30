@@ -22,6 +22,8 @@ backend/venv
 backend/.env
 __pycache__/
  *.pyc
+backend/html
+
 #pruebas unitarias
 .pystest_cache
 __pycache__

@@ -99,6 +99,7 @@ def obtenerPendientes():
 @login_required
 @alumno_required
 def listaAsignacionesAlumnoActual():
+    """Lista las asignaciones del alumno logeado actualmente"""
     alumnoActual = current_user
     asignacionesAlumno = ControladorAsignaciones.listaAsignacionesAlumno(alumnoActual.usuario)
     return jsonify(asignacionesAlumno)
